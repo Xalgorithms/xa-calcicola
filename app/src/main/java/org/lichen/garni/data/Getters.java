@@ -10,4 +10,8 @@ public class Getters {
     public static String get_string(Cursor c, String col) {
         return c.getString(c.getColumnIndexOrThrow(col));
     }
+
+    public static int get_int(Cursor c, String col) {
+        return c.getInt(c.getColumnIndexOrThrow(col));
+    }
 }

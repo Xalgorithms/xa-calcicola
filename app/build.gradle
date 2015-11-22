@@ -40,7 +40,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.reactivex:rxjava:1.0.15'
     compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+
+    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
 
     apt 'com.github.frankiesardo:auto-parcel-processor:0.3'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'

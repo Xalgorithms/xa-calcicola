@@ -5,6 +5,7 @@ import dagger.Module;
 @Module(
         injects = {
                 MainActivity.class,
+                AccountsActivity.class,
                 InvoicesActivity.class
         },
         complete = false,
