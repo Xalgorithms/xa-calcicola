@@ -25,8 +25,6 @@ import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
 
 public class InvoicesActivity extends AppCompatActivity {
-    public static final String ARG_SITE = "org.lichen.garni.InvoicesActivity.ARGS.SITE";
-
     private final PublishSubject<String> _account_title = PublishSubject.create();
     private final PublishSubject<List<Invoice>> _current_invoices = PublishSubject.create();
 
@@ -54,9 +52,10 @@ public class InvoicesActivity extends AppCompatActivity {
 
         _subscriptions = new CompositeSubscription();
 
-        GeghardSite s = getIntent().getParcelableExtra(ARG_SITE);
+        GeghardSite s = getIntent().getParcelableExtra(Constants.ARG_SITE);
+        int accountId = getIntent().getIntExtra(Constants.ARG_ACCOUNT_ID, -1);
         _client = new Client(s.url());
-        _subscriptions.add(populateFromApi(1));
+        _subscriptions.add(populateFromApi(accountId));
         _subscriptions.add(updateTitle());
         _subscriptions.add(updateAdapter());
     }

@@ -24,6 +24,10 @@ public class Client {
         return endpoint().invoice(id);
     }
 
+    public Observable<List<Account>> accounts() {
+        return endpoint().accounts();
+    }
+
     public Observable<Account> account(int id) {
         return endpoint().account(id);
     }

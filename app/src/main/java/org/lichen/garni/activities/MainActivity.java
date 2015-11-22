@@ -99,10 +99,10 @@ public class MainActivity extends RxActivity {
     }
 
     private void connect() {
-        if (null != _latest_site) {
+        String url = _previous_sites.getText().toString();
+        if (url.isEmpty()) {
             _connect.onNext(_latest_site);
         } else {
-            String url = _previous_sites.getText().toString();
             _connect.onNext(maybe_make_latest(url));
         }
     }
@@ -117,6 +117,10 @@ public class MainActivity extends RxActivity {
 
         if (null != url && !url.isEmpty()) {
             ContentValues vals = new GeghardSite.Maker().url(url).latest(1).make();
+            ContentValues updates = new ContentValues();
+
+            updates.put(GeghardSite.COL_LATEST, 0);
+            _db.update(GeghardSite.TABLE, updates, GeghardSite.COL_LATEST + "=1");
             long id = _db.insert(GeghardSite.TABLE, vals, SQLiteDatabase.CONFLICT_REPLACE);
             rv = GeghardSite.make(id, url, 1);
         }
@@ -157,7 +161,7 @@ public class MainActivity extends RxActivity {
                     @Override
                     public void call(GeghardSite s) {
                         Intent i = new Intent(MainActivity.this, AccountsActivity.class);
-                        i.putExtra(AccountsActivity.ARG_SITE, s);
+                        i.putExtra(Constants.ARG_SITE, s);
                         startActivity(i);
                     }
                 });
