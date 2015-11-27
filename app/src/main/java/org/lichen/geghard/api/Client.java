@@ -28,12 +28,20 @@ public class Client {
         return endpoint().accounts();
     }
 
+    public Observable<List<Account>> user_accounts(int user_id) {
+        return endpoint().user_accounts(user_id);
+    }
+
     public Observable<Account> account(int id) {
         return endpoint().account(id);
     }
 
     public Observable<List<Invoice>> account_invoices(int id) {
         return endpoint().account_invoices(id);
+    }
+
+    public Observable<List<Invoice>> user_invoices(int user_id) {
+        return endpoint().user_invoices(user_id);
     }
 
     private Endpoint endpoint() {

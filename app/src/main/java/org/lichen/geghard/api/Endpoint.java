@@ -18,9 +18,15 @@ public interface Endpoint {
     @GET("/api/v1/accounts")
     Observable<List<Account>> accounts();
 
+    @GET("/api/v1/users/{id}/accounts")
+    Observable<List<Account>> user_accounts(@Path("id") int id);
+
     @GET("/api/v1/accounts/{id}")
     Observable<Account> account(@Path("id") int id);
 
     @GET("/api/v1/accounts/{id}/invoices")
     Observable<List<Invoice>> account_invoices(@Path("id") int id);
+
+    @GET("/api/v1/users/{id}/invoices")
+    Observable<List<Invoice>> user_invoices(@Path("id") int id);
 }

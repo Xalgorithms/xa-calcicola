@@ -53,9 +53,10 @@ public class InvoicesActivity extends AppCompatActivity {
         _subscriptions = new CompositeSubscription();
 
         GeghardSite s = getIntent().getParcelableExtra(Constants.ARG_SITE);
-        int accountId = getIntent().getIntExtra(Constants.ARG_ACCOUNT_ID, -1);
+        int uid = getIntent().getIntExtra(Constants.ARG_USER_ID, -1);
+
         _client = new Client(s.url());
-        _subscriptions.add(populateFromApi(accountId));
+        _subscriptions.add(populateFromApi(uid));
         _subscriptions.add(updateTitle());
         _subscriptions.add(updateAdapter());
     }
@@ -82,10 +83,17 @@ public class InvoicesActivity extends AppCompatActivity {
                 });
     }
 
-    private Subscription populateFromApi(int id) {
-        return _client.account(id)
+    private Subscription populateFromApi(int user_id) {
+        return _client.user_invoices(user_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
+                .subscribe(new Action1<List<Invoice>>() {
+                    @Override
+                    public void call(List<Invoice> invoices) {
+                        _current_invoices.onNext(invoices);
+                    }
+                });
+/*
                 .flatMap(new Func1<Account, Observable<List<Invoice>>>() {
                     @Override
                     public Observable<List<Invoice>> call(Account account) {
@@ -99,6 +107,7 @@ public class InvoicesActivity extends AppCompatActivity {
                         _current_invoices.onNext(invoices);
                     }
                 });
+*/
     }
 
     @Override

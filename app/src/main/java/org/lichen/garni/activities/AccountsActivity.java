@@ -52,9 +52,11 @@ public class AccountsActivity extends RxActivity {
         super.onResume();
 
         GeghardSite s = getIntent().getParcelableExtra(Constants.ARG_SITE);
+        int user_id = getIntent().getIntExtra(Constants.ARG_USER_ID, -1);
+
         _client = new Client(s.url());
 
-        remember(populate_from_api());
+        remember(populate_from_api(user_id));
         remember(update_adapter());
         remember(activate_account());
     }
@@ -70,8 +72,8 @@ public class AccountsActivity extends RxActivity {
                 });
     }
 
-    private Subscription populate_from_api() {
-        return _client.accounts()
+    private Subscription populate_from_api(int user_id) {
+        return _client.user_accounts(user_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(new Action1<List<Account>>() {

@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     public void call(Void aVoid) {
                         Intent i = new Intent(MainActivity.this, klass);
                         i.putExtra(Constants.ARG_SITE, _site);
+                        i.putExtra(Constants.ARG_USER_ID, 1);
                         startActivity(i);
                     }
                 });
