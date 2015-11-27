@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_main_email"
+            <EditText android:id="@+id/input_login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_main_password"
+            <EditText android:id="@+id/input_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -45,7 +45,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/button_main_login"
+            android:id="@+id/action_login_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -54,7 +54,7 @@
             android:text="Login"/>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/button_main_change"
+            android:id="@+id/action_login_change"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -64,7 +64,7 @@
             android:text="Change site"/>
 
         <android.support.v7.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/input_previous_sites"
+            android:id="@+id/input_login_previous_sites"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -72,7 +72,7 @@
             android:padding="12dp"
             android:visibility="visible" />
 
-        <TextView android:id="@+id/link_main_signup"
+        <TextView android:id="@+id/link_login_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"

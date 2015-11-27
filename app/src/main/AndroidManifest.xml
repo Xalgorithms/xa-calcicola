@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,9 +23,14 @@
         </activity>
         <activity
             android:name=".activities.InvoicesActivity"
-            android:label="@string/title_activity_invoices" />
-        <activity android:name=".activities.AccountsActivity" />
-        <activity android:name=".activities.LoginActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.AccountsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.NewInvoiceActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.NewAccountActivity" android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

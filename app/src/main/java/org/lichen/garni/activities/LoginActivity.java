@@ -31,11 +31,11 @@ import rx.subjects.PublishSubject;
 public class LoginActivity extends RxActivity {
     @Inject BriteDatabase _db;
 
-    @Bind(R.id.input_main_email) EditText _email;
-    @Bind(R.id.input_main_password) EditText _password;
-    @Bind(R.id.input_previous_sites) AutoCompleteTextView _previous_sites;
-    @Bind(R.id.button_main_change) Button _change;
-    @Bind(R.id.button_main_login) Button _login;
+    @Bind(R.id.input_login_email) EditText _email;
+    @Bind(R.id.input_login_password) EditText _password;
+    @Bind(R.id.input_login_previous_sites) AutoCompleteTextView _previous_sites;
+    @Bind(R.id.action_login_change) Button _change;
+    @Bind(R.id.action_login_login) Button _login;
 
     private SitesAdapter _sites_adapter;
 
@@ -79,10 +79,10 @@ public class LoginActivity extends RxActivity {
         @Override
         public void call(Integer id) {
             switch (id) {
-                case R.id.button_main_change:
+                case R.id.action_login_change:
                     show_previous_sites();
                     break;
-                case R.id.button_main_login:
+                case R.id.action_login_login:
                     connect();
             }
         }
@@ -131,7 +131,7 @@ public class LoginActivity extends RxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         GarniApp.object_graph(this).inject(this);
         ButterKnife.bind(this);
@@ -160,7 +160,7 @@ public class LoginActivity extends RxActivity {
                 .subscribe(new Action1<GeghardSite>() {
                     @Override
                     public void call(GeghardSite s) {
-                        Intent i = new Intent(LoginActivity.this, AccountsActivity.class);
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         i.putExtra(Constants.ARG_SITE, s);
                         startActivity(i);
                     }
