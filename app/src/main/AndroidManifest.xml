@@ -8,11 +8,11 @@
         android:name=".GarniApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name">
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +21,9 @@
         </activity>
         <activity
             android:name=".activities.InvoicesActivity"
-            android:label="@string/title_activity_invoices"></activity>
-        <activity android:name=".activities.AccountsActivity"></activity>
+            android:label="@string/title_activity_invoices" />
+        <activity android:name=".activities.AccountsActivity" />
+        <activity android:name=".activities.LoginActivity" />
     </application>
 
 </manifest>

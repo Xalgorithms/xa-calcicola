@@ -5,4 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_invoices">InvoicesActivity</string>
+    <string name="label_main_accounts">accounts</string>
+    <string name="label_main_invoices">invoices</string>
+    <string name="label_main_new_account">new account</string>
+    <string name="label_main_new_invoice">new invoice</string>
 </resources>
