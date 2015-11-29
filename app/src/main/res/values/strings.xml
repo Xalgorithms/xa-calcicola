@@ -9,4 +9,6 @@
     <string name="label_main_invoices">invoices</string>
     <string name="label_main_new_account">new account</string>
     <string name="label_main_new_invoice">new invoice</string>
+    <string name="label_global_save">save</string>
+    <string name="activity_title_new_invoice">New Invoice</string>
 </resources>
