@@ -5,7 +5,6 @@ import android.os.Bundle;
 import org.lichen.garni.R;
 
 public class NewAccountActivity extends RxActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

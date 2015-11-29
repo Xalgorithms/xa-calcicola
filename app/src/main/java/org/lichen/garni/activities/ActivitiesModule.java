@@ -7,7 +7,8 @@ import dagger.Module;
                 LoginActivity.class,
                 AccountsActivity.class,
                 InvoicesActivity.class,
-                MainActivity.class
+                MainActivity.class,
+                NewInvoiceActivity.class
         },
         complete = false,
         library = true
