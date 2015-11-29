@@ -6,7 +6,14 @@
         <item name="android:textSize">28dip</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
     <style name="text_main_action">
+        <item name="android:textSize">18dip</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/garni_light_blue</item>
+    </style>
+
+    <style name="text_card_title">
         <item name="android:textSize">16dip</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/garni_light_blue</item>
