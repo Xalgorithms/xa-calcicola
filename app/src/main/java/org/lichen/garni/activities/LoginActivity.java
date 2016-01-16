@@ -160,11 +160,9 @@ public class LoginActivity extends RxActivity {
                 .subscribe(new Action1<GeghardSite>() {
                     @Override
                     public void call(GeghardSite s) {
-                        /*
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         i.putExtra(Constants.ARG_SITE, s);
                         startActivity(i);
-                        */
                     }
                 });
     }
