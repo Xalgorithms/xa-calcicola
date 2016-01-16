@@ -10,7 +10,9 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class CollectionAdapter<T> extends BaseAdapter {
+    private List<T> _all_objects = Collections.emptyList();
     private List<T> _objects = Collections.emptyList();
+
     private final LayoutInflater _inflater;
 
     public CollectionAdapter(Context ctx) {

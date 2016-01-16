@@ -5,10 +5,7 @@ import dagger.Module;
 @Module(
         injects = {
                 LoginActivity.class,
-                AccountsActivity.class,
                 InvoicesActivity.class,
-                MainActivity.class,
-                NewInvoiceActivity.class
         },
         complete = false,
         library = true
