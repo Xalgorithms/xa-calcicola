@@ -2,6 +2,7 @@ package org.lichen.garni.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -95,11 +96,14 @@ public class MainActivity
 
         switch (id) {
             case R.id.navitem_main_transactions:
+                TransactionsFragment frag = new TransactionsFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.layout_main_frame, frag);
+                ft.commit();
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        _drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
