@@ -44,6 +44,10 @@ public class Client {
         return endpoint().user_invoices(user_id);
     }
 
+    public Observable<TransactionSet> user_transactions(int user_id) {
+        return endpoint().user_transactions(user_id);
+    }
+
     private Endpoint endpoint() {
         return retrofit().create(Endpoint.class);
     }

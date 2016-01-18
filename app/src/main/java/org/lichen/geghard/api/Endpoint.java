@@ -29,4 +29,7 @@ public interface Endpoint {
 
     @GET("/api/v1/users/{id}/invoices")
     Observable<List<Invoice>> user_invoices(@Path("id") int id);
+
+    @GET("/api/v1/users/{id}/transactions")
+    Observable<TransactionSet> user_transactions(@Path("id") int id);
 }
