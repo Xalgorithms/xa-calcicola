@@ -8,7 +8,7 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 public class RxFragment extends Fragment {
-    private CompositeSubscription _subscriptions;
+    private CompositeSubscription _subscriptions = new CompositeSubscription();
 
     @Override
     public void onResume() {

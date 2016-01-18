@@ -32,4 +32,7 @@ public interface Endpoint {
 
     @GET("/api/v1/users/{id}/transactions")
     Observable<TransactionSet> user_transactions(@Path("id") int id);
+
+    @GET("/api/v1/transactions/{id}/invoices")
+    Observable<InvoiceSet> transaction_invoices(@Path("id") int id);
 }

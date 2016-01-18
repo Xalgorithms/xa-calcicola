@@ -48,6 +48,10 @@ public class Client {
         return endpoint().user_transactions(user_id);
     }
 
+    public Observable<InvoiceSet> transaction_invoices(int transaction_id) {
+        return endpoint().transaction_invoices(transaction_id);
+    }
+
     private Endpoint endpoint() {
         return retrofit().create(Endpoint.class);
     }

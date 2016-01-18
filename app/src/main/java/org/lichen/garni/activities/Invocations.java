@@ -18,20 +18,12 @@ public class Invocations {
             this.user_id = uid;
         }
     }
+
     public static Action1<MainArgs> invokeMain(final Context ctx) {
         return new Action1<MainArgs>() {
             @Override
             public void call(final MainArgs args) {
                 launchMain(ctx, args);
-            }
-        };
-    }
-
-    public static Action1<Context> invokeTransactionClosed(final Transaction tr) {
-        return new Action1<Context>() {
-            @Override
-            public void call(Context ctx) {
-                launchTransaction(ctx, tr);
             }
         };
     }
@@ -43,8 +35,9 @@ public class Invocations {
         ctx.startActivity(i);
     }
 
-    public static void launchTransaction(Context ctx, Transaction tr) {
+    public static void launchTransaction(Context ctx, GeghardSite site, Transaction tr) {
         Intent i = new Intent(ctx, TransactionActivity.class);
+        i.putExtra(Constants.ARG_SITE, site);
         i.putExtra(Constants.ARG_TRANSACTION_ID, tr.id);
         ctx.startActivity(i);
     }

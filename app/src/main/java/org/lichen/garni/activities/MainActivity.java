@@ -121,7 +121,8 @@ public class MainActivity
         switch (id) {
             case R.id.navitem_main_transactions:
                 int uid = getIntent().getIntExtra(Constants.ARG_USER_ID, -1);
-                _transactions_frag = new TransactionsFragment();
+                _transactions_frag = TransactionsFragment.make(
+                        (GeghardSite) getIntent().getParcelableExtra(Constants.ARG_SITE));
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.layout_main_frame, _transactions_frag);
                 ft.commit();

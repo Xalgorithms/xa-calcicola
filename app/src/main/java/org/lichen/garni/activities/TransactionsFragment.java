@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.lichen.garni.R;
+import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Transaction;
 
 import java.util.List;
@@ -18,22 +19,24 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
-public class TransactionsFragment extends RxFragment implements BehaviourBinder<Context> {
+public class TransactionsFragment extends RxFragment implements TransactionsAdapter.Receiver {
     @Bind(R.id.collection_main_transactions) RecyclerView _collection;
 
     private ClickBehaviours _click_behaviours = new ClickBehaviours();
 
     private TransactionsAdapter _adapter;
 
+    public static TransactionsFragment make(GeghardSite site) {
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.ARG_SITE, site);
+        TransactionsFragment rv = new TransactionsFragment();
+        rv.setArguments(args);
+        return rv;
+    }
+
     @Override
-    public void bind(View v, final Action1<Context> act) {
-        // TODO: these need to be restored onResume
-        remember(_click_behaviours.bind(v, new Action1<Void>() {
-            @Override
-            public void call(Void v) {
-                act.call(getContext());
-            }
-        }));
+    public void onResume() {
+        super.onResume();
     }
 
     @Nullable
@@ -46,7 +49,7 @@ public class TransactionsFragment extends RxFragment implements BehaviourBinder<
         ButterKnife.bind(this, v);
 
         _adapter = new TransactionsAdapter(getContext(), this);
-        _collection.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        _collection.setLayoutManager(new LinearLayoutManager(getContext()));
         _collection.setAdapter(_adapter);
 
         return v;
@@ -54,5 +57,16 @@ public class TransactionsFragment extends RxFragment implements BehaviourBinder<
 
     public void update(List<Transaction> transactions) {
         _adapter.update(transactions);
+    }
+
+    @Override
+    public void receive(View v, final Transaction tr) {
+        remember(_click_behaviours.bind(v, new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                GeghardSite site = getArguments().getParcelable(Constants.ARG_SITE);
+                Invocations.launchTransaction(getContext(), site, tr);
+            }
+        }));
     }
 }

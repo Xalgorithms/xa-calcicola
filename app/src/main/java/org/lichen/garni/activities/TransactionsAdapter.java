@@ -20,13 +20,17 @@ import java.util.Map;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewHolder> {
     private final Context _ctx;
-    private final BehaviourBinder _binder;
+    private final Receiver _receiver;
     private List<Transaction> _transactions = Lists.newArrayList();
     private Map<String, Integer> _statuses = Maps.newHashMap();
 
-    public TransactionsAdapter(Context ctx, BehaviourBinder binder) {
+    public interface Receiver {
+        void receive(View v, Transaction tr);
+    }
+
+    public TransactionsAdapter(Context ctx, Receiver receiver) {
         _ctx = ctx;
-        _binder = binder;
+        _receiver = receiver;
         _statuses.put("open", R.string.transaction_status_open);
         _statuses.put("closed", R.string.transaction_status_closed);
     }
@@ -54,9 +58,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     @Override
     public TransactionsAdapter.ViewHolder onCreateViewHolder(ViewGroup container, int vt) {
-        View v = LayoutInflater.from(container.getContext()).inflate(
-                R.layout.recycler_item_transactions, container, false);
-        return new ViewHolder(v);
+        return new ViewHolder(LayoutInflater.from(container.getContext()).inflate(
+                R.layout.recycler_item_transactions, container, false));
     }
 
     @Override
@@ -72,7 +75,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         vh.count.setText(_ctx.getString(R.string.fmt_transation_invoices, tr.n_invoices));
         vh.started.setText(DateFormat.getDateInstance().format(tr.created_at));
 
-        _binder.bind(vh.target, Invocations.invokeTransactionClosed(tr));
+        _receiver.receive(vh.target, tr);
     }
 
     @Override

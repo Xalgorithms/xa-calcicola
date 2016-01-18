@@ -13,7 +13,6 @@ public class InvoicesAdapter extends CollectionAdapter<Invoice> {
 
     @Override
     protected void update(View v, Invoice o) {
-        ((TextView) v).setText(String.format("%s effective %s", o.id, o.effective));
     }
 
     @Override
