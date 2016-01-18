@@ -17,6 +17,7 @@
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="2dp">
         <RelativeLayout
+            android:id="@+id/view_transaction_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"

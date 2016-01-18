@@ -20,11 +20,13 @@ import java.util.Map;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewHolder> {
     private final Context _ctx;
+    private final BehaviourBinder _binder;
     private List<Transaction> _transactions = Lists.newArrayList();
     private Map<String, Integer> _statuses = Maps.newHashMap();
 
-    public TransactionsAdapter(Context ctx) {
+    public TransactionsAdapter(Context ctx, BehaviourBinder binder) {
         _ctx = ctx;
+        _binder = binder;
         _statuses.put("open", R.string.transaction_status_open);
         _statuses.put("closed", R.string.transaction_status_closed);
     }
@@ -39,21 +41,22 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         public TextView status;
         public TextView count;
         public TextView started;
+        public View target;
 
         public ViewHolder(View v) {
             super(v);
             status = (TextView) v.findViewById(R.id.label_transaction_status);
             count = (TextView) v.findViewById(R.id.label_transaction_invoices);
             started = (TextView) v.findViewById(R.id.label_transaction_started);
+            target = v.findViewById(R.id.view_transaction_target);
         }
     }
 
     @Override
-    public TransactionsAdapter.ViewHolder onCreateViewHolder(
-            ViewGroup container, int vt) {
-        return new ViewHolder(
-                LayoutInflater.from(container.getContext()).inflate(
-                        R.layout.recycler_item_transactions, container, false));
+    public TransactionsAdapter.ViewHolder onCreateViewHolder(ViewGroup container, int vt) {
+        View v = LayoutInflater.from(container.getContext()).inflate(
+                R.layout.recycler_item_transactions, container, false);
+        return new ViewHolder(v);
     }
 
     @Override
@@ -68,6 +71,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         vh.status.setText(statusResId);
         vh.count.setText(_ctx.getString(R.string.fmt_transation_invoices, tr.n_invoices));
         vh.started.setText(DateFormat.getDateInstance().format(tr.created_at));
+
+        _binder.bind(vh.target, Invocations.invokeTransactionClosed(tr));
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.lichen.garni.data.GeghardSite;
+import org.lichen.geghard.api.Transaction;
 
 import rx.functions.Action1;
 
@@ -26,10 +27,25 @@ public class Invocations {
         };
     }
 
+    public static Action1<Context> invokeTransactionClosed(final Transaction tr) {
+        return new Action1<Context>() {
+            @Override
+            public void call(Context ctx) {
+                launchTransaction(ctx, tr);
+            }
+        };
+    }
+
     public static void launchMain(Context ctx, MainArgs args) {
         Intent i = new Intent(ctx, MainActivity.class);
         i.putExtra(Constants.ARG_SITE, args.site);
         i.putExtra(Constants.ARG_USER_ID, args.user_id);
+        ctx.startActivity(i);
+    }
+
+    public static void launchTransaction(Context ctx, Transaction tr) {
+        Intent i = new Intent(ctx, TransactionActivity.class);
+        i.putExtra(Constants.ARG_TRANSACTION_ID, tr.id);
         ctx.startActivity(i);
     }
 }

@@ -1,7 +1,6 @@
 package org.lichen.garni.activities;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -117,7 +116,7 @@ public class LoginActivity extends RxActivity {
         remember(subscribe_to_latest_site());
         remember(subscribe_to_connect());
 
-        remember(_click_behaviours.bind(Lists.newArrayList((View) _change, _login), _click_reactions));
+        remember(_click_behaviours.bindById(Lists.newArrayList((View) _change, _login), _click_reactions));
     }
 
     private Subscription subscribe_to_connect() {
