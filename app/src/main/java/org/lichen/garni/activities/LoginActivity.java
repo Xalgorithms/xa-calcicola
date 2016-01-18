@@ -162,6 +162,7 @@ public class LoginActivity extends RxActivity {
                     public void call(GeghardSite s) {
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         i.putExtra(Constants.ARG_SITE, s);
+                        i.putExtra(Constants.ARG_USER_ID, 1);
                         startActivity(i);
                     }
                 });

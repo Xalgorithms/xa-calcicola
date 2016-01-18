@@ -12,9 +12,20 @@ import android.view.MenuItem;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
+import org.lichen.garni.data.GeghardSite;
+import org.lichen.geghard.api.Client;
+import org.lichen.geghard.api.Transaction;
+import org.lichen.geghard.api.TransactionSet;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 public class MainActivity
         extends RxActivity
@@ -23,6 +34,11 @@ public class MainActivity
     @Bind(R.id.toolbar_main) Toolbar _toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout _drawer;
     @Bind(R.id.view_main_nav) NavigationView _nav;
+
+    private final PublishSubject<List<Transaction>> _update_transactions = PublishSubject.create();
+
+    private Client _client;
+    private TransactionsFragment _transactions_frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +65,14 @@ public class MainActivity
         toggle.syncState();
 
         _nav.setNavigationItemSelectedListener(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        GeghardSite s = getIntent().getParcelableExtra(Constants.ARG_SITE);
+
+        _client = new Client(s.url());
+        remember(update_transactions());
     }
 
     @Override
@@ -96,14 +120,40 @@ public class MainActivity
 
         switch (id) {
             case R.id.navitem_main_transactions:
-                TransactionsFragment frag = new TransactionsFragment();
+                int uid = getIntent().getIntExtra(Constants.ARG_USER_ID, -1);
+                _transactions_frag = new TransactionsFragment();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.layout_main_frame, frag);
+                ft.replace(R.id.layout_main_frame, _transactions_frag);
                 ft.commit();
+                remember(populate_from_api(uid));
                 break;
         }
 
         _drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private Subscription populate_from_api(int uid) {
+        return _client.user_transactions(uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<TransactionSet>() {
+                    @Override
+                    public void call(TransactionSet ts) {
+                        _update_transactions.onNext(ts.transactions);
+                    }
+                });
+    }
+
+    private Subscription update_transactions() {
+        return _update_transactions
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Transaction>>() {
+                    @Override
+                    public void call(List<Transaction> transactions) {
+                        _transactions_frag.update(transactions);
+                    }
+                });
     }
 }

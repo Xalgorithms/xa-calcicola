@@ -15,4 +15,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="transaction_status_open">open</string>
+    <string name="transaction_status_closed">closed</string>
+    <string name="transaction_status_unknown">unknown</string>
+
+    <string name="fmt_transation_invoices">%1$d invoices</string>
 </resources>

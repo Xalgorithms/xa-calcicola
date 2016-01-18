@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.lichen.garni.R;
+import org.lichen.geghard.api.Transaction;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class TransactionsFragment extends Fragment {
     @Bind(R.id.collection_main_transactions) RecyclerView _collection;
+
+    private TransactionsAdapter _adapter;
 
     @Nullable
     @Override
@@ -26,9 +31,13 @@ public class TransactionsFragment extends Fragment {
     private View init(View v) {
         ButterKnife.bind(this, v);
 
-        _collection.setHasFixedSize(true);
-        _collection.setLayoutManager(new LinearLayoutManager(getContext()));
-        _collection.setAdapter(new TransactionsAdapter());
+        _adapter = new TransactionsAdapter(getContext());
+        _collection.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        _collection.setAdapter(_adapter);
         return v;
+    }
+
+    public void update(List<Transaction> transactions) {
+        _adapter.update(transactions);
     }
 }
