@@ -1,7 +1,9 @@
 package org.lichen.garni.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.MenuItem;
 
 import org.lichen.garni.R;
 import org.lichen.garni.data.GeghardSite;
@@ -19,7 +21,7 @@ public class TransactionActivity extends RxActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
-        Log.d("DK", String.format("transaction_id: %s", getIntent().getIntExtra(Constants.ARG_TRANSACTION_ID, -1)));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -27,6 +29,17 @@ public class TransactionActivity extends RxActivity {
         super.onResume();
         _client = new Client(site().url());
         remember(populate_from_api(transaction_id()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem mi) {
+        switch (mi.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(mi);
     }
 
     private int transaction_id() {
