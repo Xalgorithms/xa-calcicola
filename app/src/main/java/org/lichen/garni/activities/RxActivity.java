@@ -2,6 +2,8 @@ package org.lichen.garni.activities;
 
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.Collection;
+
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -22,5 +24,11 @@ public class RxActivity extends AppCompatActivity {
 
     protected void remember(Subscription s) {
         _subscriptions.add(s);
+    }
+
+    protected void remember(Collection<Subscription> subscriptions) {
+        for (Subscription s : subscriptions) {
+            remember(s);
+        }
     }
 }

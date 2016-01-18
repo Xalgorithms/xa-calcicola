@@ -11,7 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.google.common.collect.Lists;
 import com.squareup.sqlbrite.BriteDatabase;
 
 import org.lichen.garni.GarniApp;
@@ -41,40 +41,7 @@ public class LoginActivity extends RxActivity {
 
     private GeghardSite _latest_site;
 
-    private static class ClickBehaviour implements Action1<Void> {
-        public final PublishSubject<Void> subject = PublishSubject.create();
-
-        private int _id;
-
-        @Override
-        public void call(Void v) {
-            subject.onNext(null);
-        }
-
-        public Subscription bind(Button b) {
-            _id = b.getId();
-            return RxView.clicks(b)
-                    .observeOn(Schedulers.io())
-                    .subscribe(this);
-        }
-
-        public Subscription subscribe(final Action1<Integer> act) {
-            return subject.observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(Void aVoid) {
-                            act.call(_id);
-                        }
-                    });
-        }
-    }
-
-    private final ClickBehaviour _behaviour_change = new ClickBehaviour();
-    private final ClickBehaviour _behaviour_login = new ClickBehaviour();
-
-    private final PublishSubject<GeghardSite> _connect = PublishSubject.create();
-
+    private final ClickBehaviours _click_behaviours = new ClickBehaviours();
     private final Action1<Integer> _click_reactions = new Action1<Integer>() {
         @Override
         public void call(Integer id) {
@@ -88,6 +55,8 @@ public class LoginActivity extends RxActivity {
         }
     };
 
+    private final PublishSubject<Invocations.MainArgs> _connect = PublishSubject.create();
+
     private void show_previous_sites() {
         _change.setVisibility(View.GONE);
         _previous_sites.setVisibility(View.VISIBLE);
@@ -100,11 +69,11 @@ public class LoginActivity extends RxActivity {
 
     private void connect() {
         String url = _previous_sites.getText().toString();
-        if (url.isEmpty()) {
-            _connect.onNext(_latest_site);
-        } else {
-            _connect.onNext(maybe_make_latest(url));
+        Invocations.MainArgs args = new Invocations.MainArgs(_latest_site, 1);
+        if (!url.isEmpty()) {
+            args.site = maybe_make_latest(url);
         }
+        _connect.onNext(args);
     }
 
     private void update_latest_site(GeghardSite s) {
@@ -148,24 +117,13 @@ public class LoginActivity extends RxActivity {
         remember(subscribe_to_latest_site());
         remember(subscribe_to_connect());
 
-        remember(_behaviour_change.bind(_change));
-        remember(_behaviour_change.subscribe(_click_reactions));
-        remember(_behaviour_login.bind(_login));
-        remember(_behaviour_login.subscribe(_click_reactions));
+        remember(_click_behaviours.bind(Lists.newArrayList((View) _change, _login), _click_reactions));
     }
 
     private Subscription subscribe_to_connect() {
         return _connect.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<GeghardSite>() {
-                    @Override
-                    public void call(GeghardSite s) {
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.putExtra(Constants.ARG_SITE, s);
-                        i.putExtra(Constants.ARG_USER_ID, 1);
-                        startActivity(i);
-                    }
-                });
+                .subscribe(Invocations.invokeMain(LoginActivity.this));
     }
 
     private Subscription subscribe_to_sites() {
