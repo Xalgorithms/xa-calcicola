@@ -19,7 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
-public class TransactionsFragment extends RxFragment implements TransactionsAdapter.Receiver {
+public class TransactionsFragment extends RxFragment {
     @Bind(R.id.collection_main_transactions) RecyclerView _collection;
 
     private ClickBehaviours _click_behaviours = new ClickBehaviours();
@@ -48,7 +48,18 @@ public class TransactionsFragment extends RxFragment implements TransactionsAdap
     private View init(View v) {
         ButterKnife.bind(this, v);
 
-        _adapter = new TransactionsAdapter(getContext(), this);
+        _adapter = new TransactionsAdapter(getContext(), new Receiver<Transaction>() {
+            @Override
+            public void receive(View v, final Transaction tr) {
+                remember(_click_behaviours.bind(v, new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        GeghardSite site = getArguments().getParcelable(Constants.ARG_SITE);
+                        Invocations.launchTransaction(getContext(), site, tr);
+                    }
+                }));
+            }
+        });
         _collection.setLayoutManager(new LinearLayoutManager(getContext()));
         _collection.setAdapter(_adapter);
 
@@ -57,16 +68,5 @@ public class TransactionsFragment extends RxFragment implements TransactionsAdap
 
     public void update(List<Transaction> transactions) {
         _adapter.update(transactions);
-    }
-
-    @Override
-    public void receive(View v, final Transaction tr) {
-        remember(_click_behaviours.bind(v, new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                GeghardSite site = getArguments().getParcelable(Constants.ARG_SITE);
-                Invocations.launchTransaction(getContext(), site, tr);
-            }
-        }));
     }
 }
