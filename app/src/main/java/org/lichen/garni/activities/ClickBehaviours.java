@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.List;
 
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public class ClickBehaviours {
     public Collection<Subscription> bindById(Collection<View> views, Action1<Integer> act) {
@@ -32,7 +32,8 @@ public class ClickBehaviours {
 
     public Subscription bind(View v, final Action1<Void> act) {
         return RxView.clicks(v)
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(act);
     }
 }
