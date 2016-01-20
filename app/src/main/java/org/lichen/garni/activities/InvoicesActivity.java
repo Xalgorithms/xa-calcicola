@@ -2,12 +2,13 @@ package org.lichen.garni.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.garni.data.GeghardSite;
-import org.lichen.geghard.api.Account;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Invoice;
 
@@ -15,11 +16,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
@@ -28,11 +27,8 @@ public class InvoicesActivity extends AppCompatActivity {
     private final PublishSubject<String> _account_title = PublishSubject.create();
     private final PublishSubject<List<Invoice>> _current_invoices = PublishSubject.create();
 
-    @Bind(R.id.list_invoices) ListView _invoices;
-
     private Client _client;
     private CompositeSubscription _subscriptions;
-    private InvoicesAdapter _adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +37,6 @@ public class InvoicesActivity extends AppCompatActivity {
 
         GarniApp.object_graph(this).inject(this);
         ButterKnife.bind(this);
-
-        _adapter = new InvoicesAdapter(this);
-        _invoices.setAdapter(_adapter);
     }
 
     @Override
@@ -78,7 +71,7 @@ public class InvoicesActivity extends AppCompatActivity {
                 .subscribe(new Action1<List<Invoice>>() {
                     @Override
                     public void call(List<Invoice> invoices) {
-                        _adapter.update(invoices);
+                        //_adapter.update(invoices);
                     }
                 });
     }

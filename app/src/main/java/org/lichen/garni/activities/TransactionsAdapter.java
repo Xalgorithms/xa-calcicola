@@ -11,6 +11,7 @@ import org.lichen.garni.R;
 import org.lichen.geghard.api.Transaction;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class TransactionsAdapter
@@ -23,7 +24,7 @@ public class TransactionsAdapter
         _statuses.put("closed", R.string.transaction_status_closed);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends BaseViewHolder {
         public TextView status;
         public TextView count;
         public TextView started;
@@ -31,10 +32,14 @@ public class TransactionsAdapter
 
         public ViewHolder(View v) {
             super(v);
-            status = (TextView) v.findViewById(R.id.label_transaction_status);
-            count = (TextView) v.findViewById(R.id.label_transaction_invoices);
-            started = (TextView) v.findViewById(R.id.label_transaction_started);
+            status = textView(v, R.id.label_transaction_status);
+            count = textView(v, R.id.label_transaction_invoices);
+            started = textView(v, R.id.label_transaction_started);
             target = v.findViewById(R.id.view_transaction_target);
+        }
+
+        public void update_started(Date d) {
+            started.setText(format(d));
         }
     }
 
@@ -58,7 +63,7 @@ public class TransactionsAdapter
 
         vh.status.setText(statusResId);
         vh.count.setText(context().getString(R.string.fmt_transation_invoices, tr.n_invoices));
-        vh.started.setText(DateFormat.getDateInstance().format(tr.created_at));
+        vh.update_started(tr.created_at);
 
         return vh.target;
     }
