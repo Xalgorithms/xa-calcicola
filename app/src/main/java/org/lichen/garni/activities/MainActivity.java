@@ -19,7 +19,7 @@ import org.lichen.geghard.api.TransactionSet;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,9 +31,9 @@ public class MainActivity
         extends RxActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar_main) Toolbar _toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout _drawer;
-    @Bind(R.id.view_main_nav) NavigationView _nav;
+    @BindView(R.id.toolbar_main) Toolbar _toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout _drawer;
+    @BindView(R.id.view_main_nav) NavigationView _nav;
 
     private final PublishSubject<List<Transaction>> _update_transactions = PublishSubject.create();
 

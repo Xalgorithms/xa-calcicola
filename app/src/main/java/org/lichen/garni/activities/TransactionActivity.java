@@ -13,7 +13,7 @@ import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Invoice;
 import org.lichen.geghard.api.InvoiceSet;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,7 +21,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class TransactionActivity extends RxActivity {
-    @Bind(R.id.collection_transaction_invoices) RecyclerView _collection;
+    @BindView(R.id.collection_transaction_invoices) RecyclerView _collection;
 
     private InvoicesAdapter _adapter;
     private Client _client;

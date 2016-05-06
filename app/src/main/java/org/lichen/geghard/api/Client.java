@@ -5,13 +5,10 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.functions.Action1;
 
 public class Client {
     private final String _url;

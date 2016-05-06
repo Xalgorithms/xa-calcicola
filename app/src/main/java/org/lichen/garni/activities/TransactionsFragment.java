@@ -15,12 +15,12 @@ import org.lichen.geghard.api.Transaction;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 public class TransactionsFragment extends RxFragment {
-    @Bind(R.id.collection_main_transactions) RecyclerView _collection;
+    @BindView(R.id.collection_main_transactions) RecyclerView _collection;
 
     private ClickBehaviours _click_behaviours = new ClickBehaviours();
 

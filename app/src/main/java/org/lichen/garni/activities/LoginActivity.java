@@ -19,7 +19,7 @@ import org.lichen.garni.data.GeghardSite;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,11 +30,11 @@ import rx.subjects.PublishSubject;
 public class LoginActivity extends RxActivity {
     @Inject BriteDatabase _db;
 
-    @Bind(R.id.input_login_email) EditText _email;
-    @Bind(R.id.input_login_password) EditText _password;
-    @Bind(R.id.input_login_previous_sites) AutoCompleteTextView _previous_sites;
-    @Bind(R.id.action_login_change) Button _change;
-    @Bind(R.id.action_login_login) Button _login;
+    @BindView(R.id.input_login_email) EditText _email;
+    @BindView(R.id.input_login_password) EditText _password;
+    @BindView(R.id.input_login_previous_sites) AutoCompleteTextView _previous_sites;
+    @BindView(R.id.action_login_change) Button _change;
+    @BindView(R.id.action_login_login) Button _login;
 
     private SitesAdapter _sites_adapter;
 

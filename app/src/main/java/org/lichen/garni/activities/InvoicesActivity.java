@@ -2,9 +2,6 @@ package org.lichen.garni.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
@@ -14,7 +11,6 @@ import org.lichen.geghard.api.Invoice;
 
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
