@@ -1,20 +1,16 @@
 package org.lichen.garni.activities;
 
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.view.ViewClickEvent;
-import com.jakewharton.rxbinding.widget.AdapterViewItemClickEvent;
-import com.jakewharton.rxbinding.widget.RxAdapterView;
-import com.jakewharton.rxbinding.widget.RxTextView;
 import com.squareup.sqlbrite.BriteDatabase;
 
 import org.lichen.garni.GarniApp;
@@ -25,23 +21,24 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends AppCompatActivity {
-    private final PublishSubject<Void> _connectClick = PublishSubject.create();
-    private final PublishSubject<GeghardSite> _activate = PublishSubject.create();
+    private final PublishSubject<Void> _performLogin = PublishSubject.create();
+    private final PublishSubject<Void> _performChange = PublishSubject.create();
 
     @Inject BriteDatabase _db;
-    @Bind(R.id.list_previous) ListView _previous_sites;
-    @Bind(R.id.text_server_address) EditText _server_address;
-    @Bind(R.id.button_connect) Button _connect;
+
+    @Bind(R.id.input_main_email) EditText _email;
+    @Bind(R.id.input_main_password) EditText _password;
+    @Bind(R.id.input_previous_sites) AutoCompleteTextView _previous_sites;
+    @Bind(R.id.button_main_change) Button _change;
+    @Bind(R.id.button_main_login) Button _login;
 
     private CompositeSubscription _subscriptions;
     private SitesAdapter _sites_adapter;
@@ -53,24 +50,21 @@ public class MainActivity extends AppCompatActivity {
 
         GarniApp.object_graph(this).inject(this);
         ButterKnife.bind(this);
+
+        bind(_login, _performLogin);
+        bind(_change, _performChange);
+
         _sites_adapter = new SitesAdapter(this);
         _previous_sites.setAdapter(_sites_adapter);
+    }
 
-        RxView.clickEvents(_connect)
+    private void bind(Button b, final PublishSubject<Void> subject) {
+        RxView.clickEvents(b)
                 .observeOn(Schedulers.io())
                 .subscribe(new Action1<ViewClickEvent>() {
                     @Override
                     public void call(ViewClickEvent e) {
-                        _connectClick.onNext(null);
-                    }
-                });
-        RxAdapterView.itemClickEvents(_previous_sites)
-                .observeOn(Schedulers.io())
-                .subscribe(new Action1<AdapterViewItemClickEvent>() {
-                    @Override
-                    public void call(AdapterViewItemClickEvent e) {
-                        GeghardSite s = _sites_adapter.getItem(e.position());
-                        _activate.onNext(s);
+                        subject.onNext(null);
                     }
                 });
     }
@@ -81,11 +75,26 @@ public class MainActivity extends AppCompatActivity {
 
         _subscriptions = new CompositeSubscription();
 
-        _subscriptions.add(subscribeToUrl());
-        _subscriptions.add(subscribeToActivate());
-        _subscriptions.add(subscribeToSites());
+        _subscriptions.add(build_change_ui_reaction());
+        _subscriptions.add(subscribe_to_sites());
+//        _subscriptions.add(subscribeToUrl());
+//        _subscriptions.add(subscribeToActivate());
+//        _subscriptions.add(subscribe_to_sites());
     }
 
+    private Subscription build_change_ui_reaction() {
+        return _performChange.subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        _change.setVisibility(View.GONE);
+                        _previous_sites.setVisibility(View.VISIBLE);
+                    }
+                });
+    }
+
+/*
     private Subscription subscribeToActivate() {
         return _activate
                 .subscribeOn(Schedulers.io())
@@ -118,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    private Subscription subscribeToSites() {
+*/
+    private Subscription subscribe_to_sites() {
         return _db.createQuery(GeghardSite.TABLE, GeghardSite.Q_ALL)
                 .mapToList(GeghardSite.FROM_CURSOR)
                 .subscribeOn(Schedulers.io())

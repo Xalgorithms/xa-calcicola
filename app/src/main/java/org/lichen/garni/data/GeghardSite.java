@@ -52,4 +52,9 @@ public abstract class GeghardSite implements Parcelable {
             return _values;
         }
     }
+
+    @Override
+    public String toString() {
+        return url();
+    }
 }
