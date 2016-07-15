@@ -33,4 +33,6 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.0'
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.github.frankiesardo:auto-parcel:0.3'
-    apt 'com.github.frankiesardo:auto-parcel-processor:0.3'}
+    apt 'com.github.frankiesardo:auto-parcel-processor:0.3'
+    compile 'com.jakewharton:butterknife:7.0.1'
+}

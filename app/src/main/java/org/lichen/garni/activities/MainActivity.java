@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.squareup.sqlbrite.BriteDatabase;
 
@@ -12,8 +14,14 @@ import org.lichen.garni.R;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+
 public class MainActivity extends AppCompatActivity {
     @Inject BriteDatabase _db;
+/*
+    @Bind(R.id.list_previous) ListView _previous_sites;
+    @Bind(R.id.text_server_address) EditText _server_address;
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
