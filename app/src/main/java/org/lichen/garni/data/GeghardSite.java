@@ -14,8 +14,8 @@ public abstract class GeghardSite {
 
     public static final String CREATE = ""
             + "CREATE TABLE " + TABLE + "("
-            + COL_ID  + "INTEGER NOT NULL PRIMARY KEY,"
-            + COL_URL + "TEXT NOT NULL"
+            + COL_ID  + " INTEGER NOT NULL PRIMARY KEY,"
+            + COL_URL + " TEXT NOT NULL UNIQUE"
             + ")";
 
     public abstract long id();
@@ -24,11 +24,13 @@ public abstract class GeghardSite {
     public static final Func1<Cursor, GeghardSite> FROM_CURSOR = new Func1<Cursor, GeghardSite>() {
         @Override
         public GeghardSite call(Cursor c) {
-            long id = Getters.get_long(c, COL_ID);
-            String url = Getters.get_string(c, COL_URL);
-            return new AutoParcel_GeghardSite(id, url);
+            return make(Getters.get_long(c, COL_ID), Getters.get_string(c, COL_URL));
         }
     };
+
+    public static final GeghardSite make(long id, String url) {
+        return new AutoParcel_GeghardSite(id, url);
+    }
 
     public static final class Maker {
         private final ContentValues _values = new ContentValues();
