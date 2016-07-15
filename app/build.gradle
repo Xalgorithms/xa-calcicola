@@ -23,6 +23,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.android.support:support-annotations:23.0.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
@@ -31,8 +33,12 @@ dependencies {
     compile 'com.squareup.sqlbrite:sqlbrite:0.4.1'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.jakewharton.timber:timber:4.1.0'
-    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.github.frankiesardo:auto-parcel:0.3'
-    apt 'com.github.frankiesardo:auto-parcel-processor:0.3'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+
+    apt 'com.github.frankiesardo:auto-parcel-processor:0.3'
+    apt 'com.squareup.dagger:dagger-compiler:1.2.2'
 }
