@@ -12,7 +12,7 @@ public class OpenHelper extends SQLiteOpenHelper {
     }
 
     @Override public void onCreate(SQLiteDatabase db){
-
+        db.execSQL(GeghardSite.CREATE);
     }
 
     @Override public void onUpgrade(SQLiteDatabase db, int old_version, int new_version) {
