@@ -1,5 +1,6 @@
 package org.lichen.garni.activities;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,6 @@ import com.squareup.sqlbrite.BriteDatabase;
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.garni.data.GeghardSite;
-import org.lichen.geghard.api.Geghard;
 
 import javax.inject.Inject;
 
@@ -26,7 +26,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
@@ -76,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<GeghardSite>() {
                     @Override
-                    public void call(GeghardSite geghardSite) {
-
+                    public void call(GeghardSite o) {
+                        Intent i = new Intent(MainActivity.this, InvoicesActivity.class);
+                        i.putExtra(InvoicesActivity.ARG_SITE, o);
+                        startActivity(i);
                     }
                 });
     }

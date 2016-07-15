@@ -2,12 +2,13 @@ package org.lichen.garni.data;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcelable;
 
 import auto.parcel.AutoParcel;
 import rx.functions.Func1;
 
 @AutoParcel
-public abstract class GeghardSite {
+public abstract class GeghardSite implements Parcelable {
     public static final String TABLE = "garni_gehard_sites";
     public static final String COL_ID = "_id";
     public static final String COL_URL = "url";
