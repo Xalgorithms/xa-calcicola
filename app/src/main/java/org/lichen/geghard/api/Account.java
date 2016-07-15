@@ -1,6 +1,6 @@
 package org.lichen.geghard.api;
 
 public class Account {
-    int id;
-    String name;
+    public int id;
+    public String name;
 }

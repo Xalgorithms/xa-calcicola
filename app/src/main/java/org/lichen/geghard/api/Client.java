@@ -3,10 +3,14 @@ package org.lichen.geghard.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.Observable;
 import rx.functions.Action1;
 
 public class Client {
@@ -16,29 +20,28 @@ public class Client {
         _url = url;
     }
 
-    public void invoice(int id, final Action1<Invoice> fn) {
-        endpoint().invoice(id).enqueue(new Callback<Invoice>() {
-            @Override
-            public void onResponse(Response<Invoice> response, Retrofit retrofit) {
-                fn.call(response.body());
-            }
+    public Observable<Invoice> invoice(int id) {
+        return endpoint().invoice(id);
+    }
 
-            @Override
-            public void onFailure(Throwable t) {
+    public Observable<Account> account(int id) {
+        return endpoint().account(id);
+    }
 
-            }
-        });
-
+    public Observable<List<Invoice>> account_invoices(int id) {
+        return endpoint().account_invoices(id);
     }
 
     private Endpoint endpoint() {
         return retrofit().create(Endpoint.class);
     }
 
+
     private Retrofit retrofit() {
         return new Retrofit.Builder()
                 .baseUrl(_url)
                 .addConverterFactory(gson())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }
 
