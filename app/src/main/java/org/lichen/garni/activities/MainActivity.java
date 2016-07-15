@@ -1,4 +1,4 @@
-package org.lichen.garni;
+package org.lichen.garni.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.google.common.base.Function;
 
+import org.lichen.garni.R;
 import org.lichen.geghard.api.Geghard;
 import org.lichen.geghard.api.Invoice;
 
