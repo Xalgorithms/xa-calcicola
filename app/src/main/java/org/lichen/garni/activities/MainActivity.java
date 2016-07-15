@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.view.ViewClickEvent;
+import com.jakewharton.rxbinding.widget.AdapterViewItemClickEvent;
+import com.jakewharton.rxbinding.widget.RxAdapterView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.squareup.sqlbrite.BriteDatabase;
 
@@ -34,6 +37,7 @@ import rx.subscriptions.CompositeSubscription;
 public class MainActivity extends AppCompatActivity {
     private final PublishSubject<Void> _connectClick = PublishSubject.create();
     private final PublishSubject<GeghardSite> _activate = PublishSubject.create();
+
     @Inject BriteDatabase _db;
     @Bind(R.id.list_previous) ListView _previous_sites;
     @Bind(R.id.text_server_address) EditText _server_address;
@@ -51,6 +55,24 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         _sites_adapter = new SitesAdapter(this);
         _previous_sites.setAdapter(_sites_adapter);
+
+        RxView.clickEvents(_connect)
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<ViewClickEvent>() {
+                    @Override
+                    public void call(ViewClickEvent e) {
+                        _connectClick.onNext(null);
+                    }
+                });
+        RxAdapterView.itemClickEvents(_previous_sites)
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<AdapterViewItemClickEvent>() {
+                    @Override
+                    public void call(AdapterViewItemClickEvent e) {
+                        GeghardSite s = _sites_adapter.getItem(e.position());
+                        _activate.onNext(s);
+                    }
+                });
     }
 
     @Override
@@ -62,13 +84,6 @@ public class MainActivity extends AppCompatActivity {
         _subscriptions.add(subscribeToUrl());
         _subscriptions.add(subscribeToActivate());
         _subscriptions.add(subscribeToSites());
-
-        _connect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                _connectClick.onNext(null);
-            }
-        });
     }
 
     private Subscription subscribeToActivate() {
