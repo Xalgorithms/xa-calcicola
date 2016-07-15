@@ -4,7 +4,8 @@ import dagger.Module;
 
 @Module(
         injects = {
-                MainActivity.class
+                MainActivity.class,
+                InvoicesActivity.class
         },
         complete = false,
         library = true

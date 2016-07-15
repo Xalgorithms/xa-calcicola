@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Subscription subscribeToActivate() {
-        return _activate.subscribeOn(Schedulers.io())
+        return _activate
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<GeghardSite>() {
                     @Override
