@@ -5,23 +5,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.common.base.Function;
+import com.squareup.sqlbrite.BriteDatabase;
 
+import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
-import org.lichen.geghard.api.Geghard;
-import org.lichen.geghard.api.Invoice;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
+    @Inject BriteDatabase _db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GarniApp.object_graph(this).inject(this);
+/*
         Geghard.invoice(1, new Function<Invoice, Void>() {
             @Override
             public Void apply(Invoice i) {
                 return null;
             }
         });
+*/
     }
 
     @Override
