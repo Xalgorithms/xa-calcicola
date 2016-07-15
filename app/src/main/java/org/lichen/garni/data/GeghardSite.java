@@ -18,6 +18,8 @@ public abstract class GeghardSite implements Parcelable {
             + COL_ID  + " INTEGER NOT NULL PRIMARY KEY,"
             + COL_URL + " TEXT NOT NULL UNIQUE"
             + ")";
+    public static final String Q_ALL = ""
+            + "SELECT * FROM " + TABLE;
 
     public abstract long id();
     public abstract String url();

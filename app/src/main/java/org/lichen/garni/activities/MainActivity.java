@@ -34,15 +34,13 @@ import rx.subscriptions.CompositeSubscription;
 public class MainActivity extends AppCompatActivity {
     private final PublishSubject<Void> _connectClick = PublishSubject.create();
     private final PublishSubject<GeghardSite> _activate = PublishSubject.create();
-    @Inject
-    BriteDatabase _db;
-    @Bind(R.id.list_previous)
-    ListView _previous_sites;
-    @Bind(R.id.text_server_address)
-    EditText _server_address;
-    @Bind(R.id.button_connect)
-    Button _connect;
+    @Inject BriteDatabase _db;
+    @Bind(R.id.list_previous) ListView _previous_sites;
+    @Bind(R.id.text_server_address) EditText _server_address;
+    @Bind(R.id.button_connect) Button _connect;
+
     private CompositeSubscription _subscriptions;
+    private SitesAdapter _sites_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         GarniApp.object_graph(this).inject(this);
         ButterKnife.bind(this);
+        _sites_adapter = new SitesAdapter(this);
+        _previous_sites.setAdapter(_sites_adapter);
     }
 
     @Override
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         _subscriptions.add(subscribeToUrl());
         _subscriptions.add(subscribeToActivate());
+        _subscriptions.add(subscribeToSites());
 
         _connect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
                         _activate.onNext(GeghardSite.make(id, url));
                     }
                 });
+    }
+
+    private Subscription subscribeToSites() {
+        return _db.createQuery(GeghardSite.TABLE, GeghardSite.Q_ALL)
+                .mapToList(GeghardSite.FROM_CURSOR)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(_sites_adapter);
     }
 
     @Override
