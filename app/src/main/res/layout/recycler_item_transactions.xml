@@ -27,29 +27,49 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground">
             <TextView
-                android:id="@+id/label_transaction_status"
+                android:id="@+id/label_transaction_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textAllCaps="true"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                tools:text="foo"/>
+            <TextView
+                android:id="@+id/label_transaction_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/label_transaction_name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:gravity="end"
                 tools:text="open"/>
+            <TextView
+                android:id="@+id/label_transaction_new_invoices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_transaction_name"
+                tools:text="1 new invoice"/>
             <TextView
                 android:id="@+id/label_transaction_invoices"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/label_transaction_status"
+                android:layout_below="@+id/label_transaction_new_invoices"
                 tools:text="3 invoices"/>
             <TextView
-                android:id="@+id/label_transaction_started"
+                android:id="@+id/label_transaction_rules"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/label_transaction_status"
                 android:layout_alignParentRight="true"
                 android:gravity="end"
-                tools:text="January 17, 2016" />
+                tools:text="4 rules" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

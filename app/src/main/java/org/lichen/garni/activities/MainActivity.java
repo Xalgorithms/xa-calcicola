@@ -138,10 +138,10 @@ public class MainActivity
         return _client.user_transactions(uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(new Action1<TransactionSet>() {
+                .subscribe(new Action1<List<Transaction>>() {
                     @Override
-                    public void call(TransactionSet ts) {
-                        _update_transactions.onNext(ts.transactions);
+                    public void call(List<Transaction> ts) {
+                        _update_transactions.onNext(ts);
                     }
                 });
     }

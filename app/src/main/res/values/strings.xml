@@ -20,5 +20,7 @@
     <string name="transaction_status_closed">closed</string>
     <string name="transaction_status_unknown">unknown</string>
 
-    <string name="fmt_transation_invoices">%1$d invoices</string>
+    <string name="fmt_transaction_invoices">%1$d invoices</string>
+    <string name="fmt_transaction_new_invoices">%1$d new invoices</string>
+    <string name="fmt_transaction_rules">%1$d rules</string>
 </resources>

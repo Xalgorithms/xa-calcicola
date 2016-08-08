@@ -1,7 +1,6 @@
 package org.lichen.garni.activities;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,8 +9,6 @@ import com.google.common.collect.Maps;
 import org.lichen.garni.R;
 import org.lichen.geghard.api.Transaction;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Map;
 
 public class TransactionsAdapter
@@ -25,21 +22,21 @@ public class TransactionsAdapter
     }
 
     public static class ViewHolder extends BaseViewHolder {
+        public TextView name;
         public TextView status;
-        public TextView count;
-        public TextView started;
+        public TextView invoices;
+        public TextView new_invoices;
+        public TextView rules;
         public View target;
 
         public ViewHolder(View v) {
             super(v);
+            name = textView(v, R.id.label_transaction_name);
             status = textView(v, R.id.label_transaction_status);
-            count = textView(v, R.id.label_transaction_invoices);
-            started = textView(v, R.id.label_transaction_started);
+            invoices = textView(v, R.id.label_transaction_invoices);
+            new_invoices = textView(v, R.id.label_transaction_new_invoices);
+            rules = textView(v, R.id.label_transaction_rules);
             target = v.findViewById(R.id.view_transaction_target);
-        }
-
-        public void update_started(Date d) {
-            started.setText(format(d));
         }
     }
 
@@ -61,9 +58,11 @@ public class TransactionsAdapter
             statusResId = _statuses.get(tr.status);
         }
 
+        vh.name.setText(tr.id.substring(0, 8));
         vh.status.setText(statusResId);
-        vh.count.setText(context().getString(R.string.fmt_transation_invoices, tr.n_invoices));
-        vh.update_started(tr.created_at);
+        vh.invoices.setText(context().getString(R.string.fmt_transaction_invoices, tr.invoices.size()));
+        vh.new_invoices.setText(context().getString(R.string.fmt_transaction_new_invoices, tr.invoices.size()));
+        vh.rules.setText(context().getString(R.string.fmt_transaction_rules, tr.associations.size()));
 
         return vh.target;
     }

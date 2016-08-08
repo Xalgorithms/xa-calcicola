@@ -49,13 +49,14 @@ public class InvoicesAdapter extends RecyclerCollectionAdapter<InvoicesAdapter.V
 
     @Override
     protected View init_view_holder(final ViewHolder vh, Invoice i) {
+        /*
         vh.id.setText(i.working_document().id());
         vh.update_issued(i.working_document().issued());
         Customer c = i.working_document().customer();
         vh.customer_company.setText(c.name());
         vh.customer_name.setText(c.contact_name());
         vh.total.setText(i.working_document().format_total());
-
+        */
         return vh.target;
     }
 }
