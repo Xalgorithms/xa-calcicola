@@ -41,4 +41,11 @@ public class Invocations {
         i.putExtra(Constants.ARG_TRANSACTION_ID, tr.id);
         ctx.startActivity(i);
     }
+
+    public static void launchAffectedInvoice(Context ctx, GeghardSite site, Transaction.Invoice iv) {
+        Intent i = new Intent(ctx, AffectedInvoiceActivity.class);
+        i.putExtra(Constants.ARG_SITE, site);
+        i.putExtra(Constants.ARG_INVOICE_ID, iv.id);
+        ctx.startActivity(i);
+    }
 }

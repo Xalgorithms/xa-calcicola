@@ -34,5 +34,8 @@ public interface Endpoint {
     Observable<List<Transaction>> user_transactions(@Path("id") int id);
 
     @GET("/api/v1/transactions/{id}/invoices")
-    Observable<InvoiceSet> transaction_invoices(@Path("id") int id);
+    Observable<InvoiceSet> transaction_invoices(@Path("id") String id);
+
+    @GET("/api/v1/transactions/{id}")
+    Observable<Transaction> transaction(@Path("id") String id);
 }

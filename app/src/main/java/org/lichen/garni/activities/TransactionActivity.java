@@ -11,7 +11,7 @@ import org.lichen.garni.R;
 import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Invoice;
-import org.lichen.geghard.api.InvoiceSet;
+import org.lichen.geghard.api.Transaction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,8 +23,9 @@ import rx.schedulers.Schedulers;
 public class TransactionActivity extends RxActivity {
     @BindView(R.id.collection_transaction_invoices) RecyclerView _collection;
 
-    private InvoicesAdapter _adapter;
+    private TransactionInvoicesAdapter _adapter;
     private Client _client;
+    private ClickBehaviours _click_behaviours = new ClickBehaviours();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,15 @@ public class TransactionActivity extends RxActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
 
-        _adapter = new InvoicesAdapter(this, new Receiver<Invoice>() {
+        _adapter = new TransactionInvoicesAdapter(this, new Receiver<Transaction.Invoice>() {
             @Override
-            public void receive(View v, Invoice it) {
-
+            public void receive(View v, final Transaction.Invoice it) {
+                remember(_click_behaviours.bind(v, new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        Invocations.launchAffectedInvoice(TransactionActivity.this, site(), it);
+                    }
+                }));
             }
         });
         _collection.setAdapter(_adapter);
@@ -61,22 +67,22 @@ public class TransactionActivity extends RxActivity {
         return super.onOptionsItemSelected(mi);
     }
 
-    private int transaction_id() {
-        return getIntent().getIntExtra(Constants.ARG_TRANSACTION_ID, -1);
+    private String transaction_id() {
+        return getIntent().getStringExtra(Constants.ARG_TRANSACTION_ID);
     }
 
     private GeghardSite site() {
         return getIntent().getParcelableExtra(Constants.ARG_SITE);
     }
 
-    private Subscription populate_from_api(int transaction_id) {
-        return _client.transaction_invoices(transaction_id)
+    private Subscription populate_from_api(String transaction_id) {
+        return _client.transaction(transaction_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<InvoiceSet>() {
+                .subscribe(new Action1<Transaction>() {
                     @Override
-                    public void call(InvoiceSet s) {
-                        _adapter.update(s.invoices);
+                    public void call(Transaction tr) {
+                        _adapter.update(tr.invoices);
                     }
                 });
     }

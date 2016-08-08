@@ -25,6 +25,9 @@
             android:name=".activities.InvoicesActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
+            android:name=".activities.AffectedInvoiceActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

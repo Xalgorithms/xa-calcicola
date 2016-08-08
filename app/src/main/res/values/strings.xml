@@ -23,4 +23,9 @@
     <string name="fmt_transaction_invoices">%1$d invoices</string>
     <string name="fmt_transaction_new_invoices">%1$d new invoices</string>
     <string name="fmt_transaction_rules">%1$d rules</string>
+    <string name="label_invoice_total">total</string>
+    <string name="label_invoice_lichenize">Lichenize</string>
+    <string name="label_invoice_due">Due</string>
+    <string name="label_invoice_issued">Issued</string>
+    <string name="label_invoice_items">Items</string>
 </resources>

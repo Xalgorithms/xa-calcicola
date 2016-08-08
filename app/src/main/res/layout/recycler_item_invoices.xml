@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         card_view:cardElevation="4dp">
         <RelativeLayout
-            android:id="@+id/view_invoice_target"
+            android:id="@+id/container_transaction_invoices_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -26,7 +26,7 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground">
             <TextView
-                android:id="@+id/label_invoice_id"
+                android:id="@+id/label_transaction_invoices_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -38,7 +38,7 @@
                 android:id="@+id/label_invoice_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/label_invoice_id"
+                android:layout_below="@+id/label_transaction_invoices_id"
                 tools:text="Robert Smith"/>
             <TextView
                 android:id="@+id/label_invoice_customer_company"
@@ -50,8 +50,8 @@
                 android:id="@+id/label_invoice_issued"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/label_invoice_id"
-                android:layout_toEndOf="@+id/label_invoice_id"
+                android:layout_toRightOf="@+id/label_transaction_invoices_id"
+                android:layout_toEndOf="@+id/label_transaction_invoices_id"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:gravity="end"

@@ -45,8 +45,12 @@ public class Client {
         return endpoint().user_transactions(user_id);
     }
 
-    public Observable<InvoiceSet> transaction_invoices(int transaction_id) {
+    public Observable<InvoiceSet> transaction_invoices(String transaction_id) {
         return endpoint().transaction_invoices(transaction_id);
+    }
+
+    public Observable<Transaction> transaction(String id) {
+        return endpoint().transaction(id);
     }
 
     private Endpoint endpoint() {
