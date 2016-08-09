@@ -2,6 +2,10 @@ package org.lichen.garni.activities;
 
 import android.os.Bundle;
 import java.text.DateFormat;
+
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -10,6 +14,7 @@ import org.lichen.garni.R;
 import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.InvoiceDocument;
+import org.lichen.geghard.api.Line;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,12 +31,24 @@ public class AffectedInvoiceActivity extends RxActivity {
     @BindView(R.id.label_affected_invoice_total) TextView _total;
     @BindView(R.id.label_affected_invoice_issued) TextView _issued;
     @BindView(R.id.label_affected_invoice_due) TextView _due;
+    @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
+
+    private InvoiceItemsAdapter _adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affected_invoice);
         ButterKnife.bind(this);
+
+        _adapter = new InvoiceItemsAdapter(this, new Receiver<Line>() {
+            @Override
+            public void receive(View v, Line it) {
+
+            }
+        });
+        _items.setAdapter(_adapter);
+        _items.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -67,5 +84,6 @@ public class AffectedInvoiceActivity extends RxActivity {
         _total.setText(doc.format_total());
         _issued.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(doc.issued()));
         _due.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(doc.issued()));
+        _adapter.update(doc.lines());
     }
 }

@@ -38,6 +38,7 @@ public class InvoiceDocument extends Document {
         for (Line ln : lines()) {
             total += ln.price().amount();
         }
-        return String.format("%f", total);
+
+        return format_currency(string("currency"), total);
     }
 }

@@ -7,7 +7,11 @@ public class Line extends Document {
         super(o);
     }
 
+    public String name() {
+        return Document.string(locate("item"), "name");
+    }
     public Price price() {
         return new Price(locate("price"));
     }
+    public TranslatedText description() { return new TranslatedText(locate("item.description")); }
 }
