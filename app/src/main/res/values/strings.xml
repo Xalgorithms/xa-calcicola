@@ -30,4 +30,6 @@
     <string name="fmt_transaction_new_invoices">%1$d new invoices</string>
     <string name="fmt_transaction_rules">%1$d rules</string>
     <string name="fmt_invoice_payee">%1$s (%2$s)</string>
+
+    <string name="gcm_sender_id">929318564370</string>
 </resources>

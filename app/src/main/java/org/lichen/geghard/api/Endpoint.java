@@ -37,4 +37,7 @@ public interface Endpoint {
 
     @GET("/api/v1/documents/{id}")
     Observable<JsonObject> document(@Path("id") String id);
+
+    @POST("/api/v1/events")
+    Observable<EventResponse> post_event(@Body Event e);
 }

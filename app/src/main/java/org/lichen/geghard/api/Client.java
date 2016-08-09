@@ -38,6 +38,10 @@ public class Client {
         return endpoint().document(id);
     }
 
+    public Observable<EventResponse> register(int user_id, String token) {
+        return endpoint().post_event(Event.make_register(user_id, token));
+    }
+
     private Endpoint endpoint() {
         return retrofit().create(Endpoint.class);
     }

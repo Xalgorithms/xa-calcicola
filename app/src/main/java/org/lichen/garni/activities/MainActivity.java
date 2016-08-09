@@ -1,5 +1,6 @@
 package org.lichen.garni.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -7,12 +8,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.garni.data.GeghardSite;
+import org.lichen.garni.services.RegistrationIntentService;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Transaction;
 import org.lichen.geghard.api.TransactionSet;
@@ -65,6 +71,8 @@ public class MainActivity
         toggle.syncState();
 
         _nav.setNavigationItemSelectedListener(this);
+
+        gcmUp();
     }
 
     public void onResume() {
@@ -156,5 +164,30 @@ public class MainActivity
                         _transactions_frag.update(transactions);
                     }
                 });
+    }
+
+    private void gcmUp() {
+        if (checkPlayServices()) {
+            Intent i = new Intent(this, RegistrationIntentService.class);
+            startService(i);
+        }
+    }
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i("MA", "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }

@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="org.lichen.garni.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="org.lichen.garni.permission.C2D_MESSAGE" />
+
     <application
         android:name=".GarniApp"
         android:allowBackup="true"
@@ -38,6 +43,35 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
+
+        <!-- GCM -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="org.lichen.garni" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="org.lichen.garni.services.GcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="org.lichen.garni.services.InstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="org.lichen.garni.services.RegistrationIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
