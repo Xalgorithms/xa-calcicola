@@ -14,7 +14,7 @@ public class TransactionInvoicesAdapter extends RecyclerCollectionAdapter<Transa
 
         public ViewHolder(View v) {
             super(v);
-            id = textView(v, R.id.label_transaction_invoices_id);
+            id = textView(v, R.id.label_affected_invoice_id);
             target = v.findViewById(R.id.container_transaction_invoices_target);
         }
     }

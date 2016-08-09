@@ -1,5 +1,7 @@
 package org.lichen.geghard.api;
 
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import retrofit2.http.Body;
@@ -11,9 +13,6 @@ import rx.Observable;
 public interface Endpoint {
     @GET("/api/v1/invoices/{id}")
     Observable<Invoice> invoice(@Path("id") int id);
-
-    @POST("/api/v1/invoices")
-    Observable<Invoice> create_invoice(@Body Invoice invoice);
 
     @GET("/api/v1/accounts")
     Observable<List<Account>> accounts();
@@ -33,9 +32,9 @@ public interface Endpoint {
     @GET("/api/v1/users/{id}/transactions")
     Observable<List<Transaction>> user_transactions(@Path("id") int id);
 
-    @GET("/api/v1/transactions/{id}/invoices")
-    Observable<InvoiceSet> transaction_invoices(@Path("id") String id);
-
     @GET("/api/v1/transactions/{id}")
     Observable<Transaction> transaction(@Path("id") String id);
+
+    @GET("/api/v1/documents/{id}")
+    Observable<JsonObject> document(@Path("id") String id);
 }

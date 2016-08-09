@@ -26,7 +26,7 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground">
             <TextView
-                android:id="@+id/label_transaction_invoices_id"
+                android:id="@+id/label_affected_invoice_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -38,7 +38,7 @@
                 android:id="@+id/label_invoice_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/label_transaction_invoices_id"
+                android:layout_below="@+id/label_affected_invoice_id"
                 tools:text="Robert Smith"/>
             <TextView
                 android:id="@+id/label_invoice_customer_company"
@@ -50,8 +50,8 @@
                 android:id="@+id/label_invoice_issued"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/label_transaction_invoices_id"
-                android:layout_toEndOf="@+id/label_transaction_invoices_id"
+                android:layout_toRightOf="@+id/label_affected_invoice_id"
+                android:layout_toEndOf="@+id/label_affected_invoice_id"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:gravity="end"

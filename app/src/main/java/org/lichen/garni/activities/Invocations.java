@@ -46,6 +46,7 @@ public class Invocations {
         Intent i = new Intent(ctx, AffectedInvoiceActivity.class);
         i.putExtra(Constants.ARG_SITE, site);
         i.putExtra(Constants.ARG_INVOICE_ID, iv.id);
+        i.putExtra(Constants.ARG_DOCUMENT_ID, iv.document.id);
         ctx.startActivity(i);
     }
 }
