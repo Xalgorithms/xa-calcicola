@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
-import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Invoice;
 
@@ -41,10 +40,9 @@ public class InvoicesActivity extends AppCompatActivity {
 
         _subscriptions = new CompositeSubscription();
 
-        GeghardSite s = getIntent().getParcelableExtra(Constants.ARG_SITE);
         int uid = getIntent().getIntExtra(Constants.ARG_USER_ID, -1);
 
-        _client = new Client(s.url());
+        //_client = new Client(s.url());
         _subscriptions.add(populateFromApi(uid));
         _subscriptions.add(updateTitle());
         _subscriptions.add(updateAdapter());

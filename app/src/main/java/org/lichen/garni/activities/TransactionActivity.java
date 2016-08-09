@@ -8,9 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.lichen.garni.R;
-import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Client;
-import org.lichen.geghard.api.Invoice;
 import org.lichen.geghard.api.Transaction;
 
 import butterknife.BindView;
@@ -40,7 +38,7 @@ public class TransactionActivity extends RxActivity {
                 remember(_click_behaviours.bind(v, new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        Invocations.launchAffectedInvoice(TransactionActivity.this, site(), it);
+                        Invocations.launchAffectedInvoice(TransactionActivity.this, it);
                     }
                 }));
             }
@@ -52,7 +50,7 @@ public class TransactionActivity extends RxActivity {
     @Override
     public void onResume() {
         super.onResume();
-        _client = new Client(site().url());
+        //_client = new Client(site().url());
         remember(populate_from_api(transaction_id()));
     }
 
@@ -69,10 +67,6 @@ public class TransactionActivity extends RxActivity {
 
     private String transaction_id() {
         return getIntent().getStringExtra(Constants.ARG_TRANSACTION_ID);
-    }
-
-    private GeghardSite site() {
-        return getIntent().getParcelableExtra(Constants.ARG_SITE);
     }
 
     private Subscription populate_from_api(String transaction_id) {

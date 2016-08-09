@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 
 import org.lichen.garni.R;
-import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.InvoiceDocument;
 import org.lichen.geghard.api.Line;
@@ -54,16 +53,12 @@ public class AffectedInvoiceActivity extends RxActivity {
     @Override
     public void onResume() {
         super.onResume();
-        _client = new Client(site().url());
+        //_client = new Client(site().url());
         remember(populate_from_api(document_id()));
     }
 
     private String document_id() {
         return getIntent().getStringExtra(Constants.ARG_DOCUMENT_ID);
-    }
-
-    private GeghardSite site() {
-        return getIntent().getParcelableExtra(Constants.ARG_SITE);
     }
 
     private Subscription populate_from_api(String document_id) {

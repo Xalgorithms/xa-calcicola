@@ -11,8 +11,7 @@ public class OpenHelper extends SQLiteOpenHelper {
         super(ctx, "garni.db", null, VERSION);
     }
 
-    @Override public void onCreate(SQLiteDatabase db){
-        db.execSQL(GeghardSite.CREATE);
+    @Override public void onCreate(SQLiteDatabase db) {
     }
 
     @Override public void onUpgrade(SQLiteDatabase db, int old_version, int new_version) {

@@ -1,6 +1,5 @@
 package org.lichen.garni.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.lichen.garni.R;
-import org.lichen.garni.data.GeghardSite;
 import org.lichen.geghard.api.Transaction;
 
 import java.util.List;
@@ -26,9 +24,8 @@ public class TransactionsFragment extends RxFragment {
 
     private TransactionsAdapter _adapter;
 
-    public static TransactionsFragment make(GeghardSite site) {
+    public static TransactionsFragment make() {
         Bundle args = new Bundle();
-        args.putParcelable(Constants.ARG_SITE, site);
         TransactionsFragment rv = new TransactionsFragment();
         rv.setArguments(args);
         return rv;
@@ -54,8 +51,7 @@ public class TransactionsFragment extends RxFragment {
                 remember(_click_behaviours.bind(v, new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        GeghardSite site = getArguments().getParcelable(Constants.ARG_SITE);
-                        Invocations.launchTransaction(getContext(), site, tr);
+                        Invocations.launchTransaction(getContext(), tr);
                     }
                 }));
             }

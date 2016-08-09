@@ -17,11 +17,9 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
-import org.lichen.garni.data.GeghardSite;
 import org.lichen.garni.services.RegistrationIntentService;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Transaction;
-import org.lichen.geghard.api.TransactionSet;
 
 import java.util.List;
 
@@ -77,9 +75,7 @@ public class MainActivity
 
     public void onResume() {
         super.onResume();
-        GeghardSite s = getIntent().getParcelableExtra(Constants.ARG_SITE);
-
-        _client = new Client(s.url());
+        //_client = new Client(s.url());
         remember(update_transactions());
     }
 
@@ -129,8 +125,7 @@ public class MainActivity
         switch (id) {
             case R.id.navitem_main_transactions:
                 int uid = getIntent().getIntExtra(Constants.ARG_USER_ID, -1);
-                _transactions_frag = TransactionsFragment.make(
-                        (GeghardSite) getIntent().getParcelableExtra(Constants.ARG_SITE));
+                _transactions_frag = TransactionsFragment.make();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.layout_main_frame, _transactions_frag);
                 ft.commit();
