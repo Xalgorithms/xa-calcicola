@@ -11,6 +11,8 @@ import org.lichen.garni.R;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Transaction;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
@@ -20,9 +22,9 @@ import rx.schedulers.Schedulers;
 
 public class TransactionActivity extends RxActivity {
     @BindView(R.id.collection_transaction_invoices) RecyclerView _collection;
+    @Inject Client _client;
 
     private TransactionInvoicesAdapter _adapter;
-    private Client _client;
     private ClickBehaviours _click_behaviours = new ClickBehaviours();
 
     @Override
@@ -50,7 +52,6 @@ public class TransactionActivity extends RxActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //_client = new Client(site().url());
         remember(populate_from_api(transaction_id()));
     }
 

@@ -1,9 +1,6 @@
 package org.lichen.garni.activities;
 
-import org.lichen.geghard.api.Client;
-
 import dagger.Module;
-import dagger.Provides;
 
 @Module(
         injects = {

@@ -4,6 +4,8 @@ import android.app.Application;
 
 import org.lichen.garni.activities.ActivitiesModule;
 import org.lichen.garni.data.DataModule;
+import org.lichen.garni.services.ServicesModule;
+import org.lichen.geghard.api.Client;
 
 import javax.inject.Singleton;
 
@@ -11,7 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-        includes = { DataModule.class, ActivitiesModule.class }
+        includes = { DataModule.class, ActivitiesModule.class, ServicesModule.class }
 )
 public final class GarniModule {
     private final Application _app;
@@ -22,5 +24,8 @@ public final class GarniModule {
 
     @Provides @Singleton Application provideApplication() {
         return _app;
+    }
+    @Provides @Singleton Client provideClient() {
+        return new Client("https://xa-lichen.herokuapp.com");
     }
 }

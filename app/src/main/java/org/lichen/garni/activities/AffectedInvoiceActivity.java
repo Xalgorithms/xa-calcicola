@@ -15,6 +15,8 @@ import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.InvoiceDocument;
 import org.lichen.geghard.api.Line;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
@@ -23,16 +25,16 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class AffectedInvoiceActivity extends RxActivity {
-    private Client _client;
-
     @BindView(R.id.label_affected_invoice_id) TextView _id;
     @BindView(R.id.label_affected_invoice_payee) TextView _payee;
     @BindView(R.id.label_affected_invoice_total) TextView _total;
     @BindView(R.id.label_affected_invoice_issued) TextView _issued;
     @BindView(R.id.label_affected_invoice_due) TextView _due;
     @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
+    @Inject Client _client;
 
     private InvoiceItemsAdapter _adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

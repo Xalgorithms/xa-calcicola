@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -45,14 +44,8 @@ public class LoginActivity extends RxActivity {
     private final PublishSubject<Invocations.MainArgs> _connect = PublishSubject.create();
 
     private void connect() {
-        /*
-        String url = _previous_sites.getText().toString();
-        Invocations.MainArgs args = new Invocations.MainArgs(_latest_site, 1);
-        if (!url.isEmpty()) {
-            args.site = maybe_make_latest(url);
-        }
+        Invocations.MainArgs args = new Invocations.MainArgs(1);
         _connect.onNext(args);
-        */
     }
 
     @Override

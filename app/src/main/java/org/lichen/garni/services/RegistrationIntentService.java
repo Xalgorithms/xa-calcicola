@@ -9,18 +9,29 @@ import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.EventResponse;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class RegistrationIntentService extends IntentService {
+    @Inject Client _client;
+
     public RegistrationIntentService() {
         super("RIS");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        GarniApp.object_graph(this).inject(this);
     }
 
     @Override
@@ -49,8 +60,7 @@ public class RegistrationIntentService extends IntentService {
     }
 
     private void sendRegistrationToServer(String token) {
-        Client cl = new Client("https://xa-lichen.herokuapp.com");
-        cl.register(1, token)
+        _client.register(1, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(new Action1<EventResponse>() {

@@ -23,6 +23,8 @@ import org.lichen.geghard.api.Transaction;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
@@ -38,10 +40,10 @@ public class MainActivity
     @BindView(R.id.toolbar_main) Toolbar _toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout _drawer;
     @BindView(R.id.view_main_nav) NavigationView _nav;
+    @Inject Client _client;
 
     private final PublishSubject<List<Transaction>> _update_transactions = PublishSubject.create();
 
-    private Client _client;
     private TransactionsFragment _transactions_frag;
 
     @Override
@@ -75,7 +77,6 @@ public class MainActivity
 
     public void onResume() {
         super.onResume();
-        //_client = new Client(s.url());
         remember(update_transactions());
     }
 
