@@ -26,14 +26,6 @@ public class Client {
         return endpoint().user_invoices(user_id);
     }
 
-    public Observable<List<Transaction>> user_transactions(int user_id) {
-        return endpoint().user_transactions(user_id);
-    }
-
-    public Observable<Transaction> transaction(String id) {
-        return endpoint().transaction(id);
-    }
-
     public Observable<JsonObject> document(String id) {
         return endpoint().document(id);
     }

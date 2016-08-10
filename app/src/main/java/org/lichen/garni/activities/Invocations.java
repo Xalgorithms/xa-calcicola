@@ -6,8 +6,6 @@ import android.content.Intent;
 import org.lichen.geghard.api.Invoice;
 import org.lichen.geghard.api.Transaction;
 
-import rx.functions.Action1;
-
 public class Invocations {
     public static void launchTransaction(Context ctx, Transaction tr) {
         Intent i = new Intent(ctx, UserInvoicesActivity.class);

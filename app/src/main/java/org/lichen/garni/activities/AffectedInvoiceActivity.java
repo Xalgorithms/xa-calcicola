@@ -35,8 +35,7 @@ public class AffectedInvoiceActivity extends RxActivity {
     @Inject Client _client;
 
     private InvoiceItemsAdapter _adapter;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +57,6 @@ public class AffectedInvoiceActivity extends RxActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //_client = new Client(site().url());
         remember(populate_from_api(document_id()));
     }
 
