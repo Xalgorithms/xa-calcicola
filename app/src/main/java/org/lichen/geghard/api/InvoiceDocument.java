@@ -8,8 +8,16 @@ import java.util.Date;
 import java.util.List;
 
 public class InvoiceDocument extends Document {
-    public InvoiceDocument(JsonObject o) {
+    private final String _id;
+
+    public InvoiceDocument(String id, JsonObject o)
+    {
         super(o);
+        _id = id;
+    }
+
+    public String document_id() {
+        return _id;
     }
 
     public String id() {

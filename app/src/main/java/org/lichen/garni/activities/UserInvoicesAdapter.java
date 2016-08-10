@@ -1,16 +1,24 @@
 package org.lichen.garni.activities;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.TextView;
 
+import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
+import org.lichen.garni.data.Documents;
 import org.lichen.geghard.api.Invoice;
+import org.lichen.geghard.api.InvoiceDocument;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserInvoicesAdapter extends RecyclerCollectionAdapter<UserInvoicesAdapter.ViewHolder, Invoice> {
+    private final java.text.DateFormat _fmt;
+
     public static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.label_invoice_customer_name) TextView name;
         @BindView(R.id.label_invoice_total) TextView total;
@@ -25,8 +33,12 @@ public class UserInvoicesAdapter extends RecyclerCollectionAdapter<UserInvoicesA
         }
     }
 
+    @Inject Documents _documents;
+
     public UserInvoicesAdapter(Context ctx, Receiver<Invoice> receiver) {
         super(ctx, receiver);
+        GarniApp.object_graph(ctx).inject(this);
+        _fmt = DateFormat.getDateFormat(ctx);
     }
 
     @Override
@@ -41,11 +53,13 @@ public class UserInvoicesAdapter extends RecyclerCollectionAdapter<UserInvoicesA
 
     @Override
     protected View init_view_holder(final ViewHolder vh, Invoice i) {
-        vh.name.setText("Foo");
-        vh.total.setText("1000.00");
-        vh.company.setText("Company");
+        InvoiceDocument doc = _documents.get(i.document.id);
+
+        vh.name.setText(doc.customer().contact_name());
+        vh.total.setText(doc.format_total());
+        vh.company.setText(doc.customer().name());
         vh.status.setText("Status");
-        vh.issued.setText("April 01, 2016");
+        vh.issued.setText(_fmt.format(doc.issued()));
 
         return vh.target;
     }

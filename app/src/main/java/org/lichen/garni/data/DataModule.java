@@ -34,4 +34,9 @@ public final class DataModule {
     BriteDatabase provideBriteDatabase(SqlBrite b, SQLiteOpenHelper h) {
         return b.wrapDatabaseHelper(h, Schedulers.io());
     }
+
+    @Provides @Singleton
+    Documents provideDocuments() {
+        return new Documents();
+    }
 }
