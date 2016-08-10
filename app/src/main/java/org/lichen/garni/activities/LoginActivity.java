@@ -13,14 +13,12 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.common.collect.Lists;
 import com.squareup.sqlbrite.BriteDatabase;
 
-import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.garni.services.RegistrationIntentService;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -28,7 +26,7 @@ import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 import timber.log.Timber;
 
-public class LoginActivity extends RxActivity {
+public class LoginActivity extends CoreActivity {
     @Inject BriteDatabase _db;
 
     @BindView(R.id.input_login_email) EditText _email;
@@ -55,10 +53,7 @@ public class LoginActivity extends RxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        GarniApp.object_graph(this).inject(this);
-        ButterKnife.bind(this);
+        init(R.layout.activity_login);
     }
 
     @Override
@@ -66,7 +61,6 @@ public class LoginActivity extends RxActivity {
         super.onResume();
 
         remember(subscribe_to_connect());
-
         remember(_click_behaviours.bindById(Lists.newArrayList((View) _login), _click_reactions));
     }
 

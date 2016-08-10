@@ -12,7 +12,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
-import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.garni.adapters.Receiver;
 import org.lichen.garni.adapters.UserInvoicesAdapter;
@@ -26,7 +25,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,7 +34,7 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
-public class UserInvoicesActivity extends RxActivity {
+public class UserInvoicesActivity extends CoreActivity {
     @BindView(R.id.collection_user_invoices_invoices) RecyclerView _collection;
     @Inject Client _client;
     @Inject Documents _documents;
@@ -47,10 +45,7 @@ public class UserInvoicesActivity extends RxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_invoices);
-
-        GarniApp.object_graph(this).inject(this);
-        ButterKnife.bind(this);
+        init(R.layout.activity_user_invoices);
 
         _adapter = new UserInvoicesAdapter(this, new Receiver<Invoice>() {
             @Override

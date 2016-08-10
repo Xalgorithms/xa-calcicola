@@ -1,8 +1,6 @@
 package org.lichen.garni.activities;
 
 import android.os.Bundle;
-import java.text.DateFormat;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +8,6 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
-import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.garni.adapters.InvoiceItemsAdapter;
 import org.lichen.garni.adapters.Receiver;
@@ -19,17 +16,18 @@ import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.InvoiceDocument;
 import org.lichen.geghard.api.Line;
 
+import java.text.DateFormat;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class AffectedInvoiceActivity extends RxActivity {
+public class AffectedInvoiceActivity extends CoreActivity {
     @BindView(R.id.label_invoice_id) TextView _id;
     @BindView(R.id.label_affected_invoice_payee) TextView _payee;
     @BindView(R.id.label_affected_invoice_total) TextView _total;
@@ -45,10 +43,7 @@ public class AffectedInvoiceActivity extends RxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_affected_invoice);
-
-        GarniApp.object_graph(this).inject(this);
-        ButterKnife.bind(this);
+        init(R.layout.activity_affected_invoice);
 
         _adapter = new InvoiceItemsAdapter(this, new Receiver<Line>() {
             @Override
