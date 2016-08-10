@@ -8,27 +8,25 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 public class RxFragment extends Fragment {
-    private CompositeSubscription _subscriptions = new CompositeSubscription();
+    private LifecycleSubscriptions _subscriptions = new LifecycleSubscriptions();
 
     @Override
     public void onResume() {
         super.onResume();
-        _subscriptions = new CompositeSubscription();
+        _subscriptions.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        _subscriptions.unsubscribe();
+        _subscriptions.pause();
     }
 
     protected void remember(Subscription s) {
-        _subscriptions.add(s);
+        _subscriptions.remember(s);
     }
 
     protected void remember(Collection<Subscription> ss) {
-        for (Subscription s : ss) {
-            remember(s);
-        }
+        _subscriptions.remember(ss);
     }
 }

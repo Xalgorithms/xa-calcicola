@@ -1,4 +1,4 @@
-package org.lichen.garni.activities;
+package org.lichen.garni.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

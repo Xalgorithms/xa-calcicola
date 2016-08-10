@@ -12,6 +12,8 @@ import com.google.gson.JsonObject;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
+import org.lichen.garni.adapters.InvoiceItemsAdapter;
+import org.lichen.garni.adapters.Receiver;
 import org.lichen.garni.data.Documents;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.InvoiceDocument;

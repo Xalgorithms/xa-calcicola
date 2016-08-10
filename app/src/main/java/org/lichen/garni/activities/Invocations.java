@@ -7,12 +7,6 @@ import org.lichen.geghard.api.Invoice;
 import org.lichen.geghard.api.Transaction;
 
 public class Invocations {
-    public static void launchTransaction(Context ctx, Transaction tr) {
-        Intent i = new Intent(ctx, UserInvoicesActivity.class);
-        i.putExtra(Constants.ARG_TRANSACTION_ID, tr.id);
-        ctx.startActivity(i);
-    }
-
     public static void launchAffectedInvoice(Context ctx, Invoice iv) {
         Intent i = new Intent(ctx, AffectedInvoiceActivity.class);
         i.putExtra(Constants.ARG_INVOICE_ID, iv.id);

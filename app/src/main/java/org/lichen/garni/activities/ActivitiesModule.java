@@ -1,5 +1,7 @@
 package org.lichen.garni.activities;
 
+import org.lichen.garni.adapters.UserInvoicesAdapter;
+
 import dagger.Module;
 
 @Module(
@@ -7,7 +9,6 @@ import dagger.Module;
                 LoginActivity.class,
                 UserInvoicesActivity.class,
                 AffectedInvoiceActivity.class,
-                UserInvoicesAdapter.class
         },
         complete = false,
         library = true
