@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18sp">
                 <TextView
-                    android:id="@+id/label_affected_invoice_id"
+                    android:id="@+id/label_invoice_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/label_affected_invoice_id"
+                    android:layout_below="@+id/label_invoice_id"
                     android:textSize="16sp"
                     tools:text="Bob Smith (Smith and Sons)"/>
                 <TextView

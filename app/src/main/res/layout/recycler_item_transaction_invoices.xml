@@ -26,7 +26,7 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground">
             <TextView
-                android:id="@+id/label_affected_invoice_id"
+                android:id="@+id/label_invoice_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

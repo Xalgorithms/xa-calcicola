@@ -7,9 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activities.TransactionActivity">
+    tools:context=".activities.UserInvoicesActivity">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/collection_transaction_invoices"
+        android:id="@+id/collection_user_invoices_invoices"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />

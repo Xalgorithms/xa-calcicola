@@ -3,15 +3,6 @@ package org.lichen.geghard.api;
 import java.util.List;
 
 public class Transaction {
-    public class Invoice {
-        public class Document {
-            public String id;
-            public String url;
-        }
-        public String id;
-        public Document document;
-    }
-
     public class Association {
         class Rule {
             String id;

@@ -1,5 +1,6 @@
 package org.lichen.garni.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -7,11 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.common.collect.Lists;
 import com.squareup.sqlbrite.BriteDatabase;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
+import org.lichen.garni.services.RegistrationIntentService;
 
 import javax.inject.Inject;
 
@@ -22,6 +26,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
+import timber.log.Timber;
 
 public class LoginActivity extends RxActivity {
     @Inject BriteDatabase _db;
@@ -41,11 +46,10 @@ public class LoginActivity extends RxActivity {
         }
     };
 
-    private final PublishSubject<Invocations.MainArgs> _connect = PublishSubject.create();
+    private final PublishSubject<Void> _connect = PublishSubject.create();
 
     private void connect() {
-        Invocations.MainArgs args = new Invocations.MainArgs(1);
-        _connect.onNext(args);
+        _connect.onNext(null);
     }
 
     @Override
@@ -69,7 +73,14 @@ public class LoginActivity extends RxActivity {
     private Subscription subscribe_to_connect() {
         return _connect.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Invocations.invokeMain(LoginActivity.this));
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        if (gcmUp()) {
+                            Invocations.launchUserInvoices(LoginActivity.this);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -92,5 +103,35 @@ public class LoginActivity extends RxActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean gcmUp() {
+        if (checkPlayServices()) {
+            Intent i = new Intent(this, RegistrationIntentService.class);
+            startService(i);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Timber.d("Failed to resolved Play error");
+                finish();
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }

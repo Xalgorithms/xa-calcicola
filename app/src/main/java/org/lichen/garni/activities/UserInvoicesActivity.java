@@ -7,9 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.geghard.api.Client;
-import org.lichen.geghard.api.Transaction;
+import org.lichen.geghard.api.Invoice;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,27 +23,28 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class TransactionActivity extends RxActivity {
-    @BindView(R.id.collection_transaction_invoices) RecyclerView _collection;
+public class UserInvoicesActivity extends RxActivity {
+    @BindView(R.id.collection_user_invoices_invoices) RecyclerView _collection;
     @Inject Client _client;
 
-    private TransactionInvoicesAdapter _adapter;
+    private UserInvoicesAdapter _adapter;
     private ClickBehaviours _click_behaviours = new ClickBehaviours();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transactions);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_user_invoices);
+
+        GarniApp.object_graph(this).inject(this);
         ButterKnife.bind(this);
 
-        _adapter = new TransactionInvoicesAdapter(this, new Receiver<Transaction.Invoice>() {
+        _adapter = new UserInvoicesAdapter(this, new Receiver<Invoice>() {
             @Override
-            public void receive(View v, final Transaction.Invoice it) {
+            public void receive(View v, final Invoice it) {
                 remember(_click_behaviours.bind(v, new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        Invocations.launchAffectedInvoice(TransactionActivity.this, it);
+                        Invocations.launchAffectedInvoice(UserInvoicesActivity.this, it);
                     }
                 }));
             }
@@ -52,7 +56,7 @@ public class TransactionActivity extends RxActivity {
     @Override
     public void onResume() {
         super.onResume();
-        remember(populate_from_api(transaction_id()));
+        remember(populate_from_api());
     }
 
     @Override
@@ -66,18 +70,14 @@ public class TransactionActivity extends RxActivity {
         return super.onOptionsItemSelected(mi);
     }
 
-    private String transaction_id() {
-        return getIntent().getStringExtra(Constants.ARG_TRANSACTION_ID);
-    }
-
-    private Subscription populate_from_api(String transaction_id) {
-        return _client.transaction(transaction_id)
+    private Subscription populate_from_api() {
+        return _client.user_invoices(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Transaction>() {
+                .subscribe(new Action1<List<Invoice>>() {
                     @Override
-                    public void call(Transaction tr) {
-                        _adapter.update(tr.invoices);
+                    public void call(List<Invoice> invoices) {
+                        _adapter.update(invoices);
                     }
                 });
     }

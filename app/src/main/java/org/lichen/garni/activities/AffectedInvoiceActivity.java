@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
+import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.InvoiceDocument;
@@ -25,7 +26,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class AffectedInvoiceActivity extends RxActivity {
-    @BindView(R.id.label_affected_invoice_id) TextView _id;
+    @BindView(R.id.label_invoice_id) TextView _id;
     @BindView(R.id.label_affected_invoice_payee) TextView _payee;
     @BindView(R.id.label_affected_invoice_total) TextView _total;
     @BindView(R.id.label_affected_invoice_issued) TextView _issued;
@@ -40,6 +41,8 @@ public class AffectedInvoiceActivity extends RxActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affected_invoice);
+
+        GarniApp.object_graph(this).inject(this);
         ButterKnife.bind(this);
 
         _adapter = new InvoiceItemsAdapter(this, new Receiver<Line>() {

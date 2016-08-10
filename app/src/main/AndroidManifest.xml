@@ -27,22 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.InvoicesActivity"
+            android:name=".activities.UserInvoicesActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".activities.AffectedInvoiceActivity"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".activities.TransactionActivity"
-            android:theme="@style/Theme.AppCompat.Light">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
 
         <!-- GCM -->
         <receiver
