@@ -5,6 +5,7 @@ import dagger.Module;
 @Module(
         injects = {
             RegistrationIntentService.class,
+            GcmListenerService.class
         },
         complete = false,
         library = true
