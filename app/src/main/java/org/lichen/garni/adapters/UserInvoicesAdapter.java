@@ -66,7 +66,7 @@ public class UserInvoicesAdapter extends RecyclerCollectionAdapter<UserInvoicesA
 
     @Override
     protected View init_view_holder(final ViewHolder vh, Invoice i) {
-        final String id = i.document.id;
+        final String id = i.revisions.get(i.revisions.size() - 1).document.id;
         Action1<InvoiceDocument> receive_document = new Action1<InvoiceDocument>() {
             @Override
             public void call(InvoiceDocument doc) {

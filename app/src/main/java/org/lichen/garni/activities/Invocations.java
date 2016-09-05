@@ -10,7 +10,9 @@ public class Invocations {
     public static void launchAffectedInvoice(Context ctx, Invoice iv) {
         Intent i = new Intent(ctx, AffectedInvoiceActivity.class);
         i.putExtra(Constants.ARG_INVOICE_ID, iv.id);
-        i.putExtra(Constants.ARG_DOCUMENT_ID, iv.document.id);
+        if (iv.revisions.size() > 0) {
+            i.putExtra(Constants.ARG_DOCUMENT_ID, iv.revisions.get(iv.revisions.size() - 1).document.id);
+        }
         ctx.startActivity(i);
     }
 
