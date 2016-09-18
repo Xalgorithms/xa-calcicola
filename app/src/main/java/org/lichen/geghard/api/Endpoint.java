@@ -25,4 +25,7 @@ public interface Endpoint {
 
     @GET("/api/v1/invoices/{id}/change")
     Observable<Change> get_invoice_change(@Path("id") String invoice_id);
+
+    @GET("/api/v1/invoices/{id}/latest")
+    Observable<Invoice.Document> invoice_latest(@Path("id") String invoice_id);
 }

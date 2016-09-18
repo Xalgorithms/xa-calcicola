@@ -42,6 +42,10 @@ public class Client {
         return endpoint().post_event(Event.make_execute(transaction_id));
     }
 
+    public Observable<Invoice.Document> invoice_latest(String invoice_id) {
+        return endpoint().invoice_latest(invoice_id);
+    }
+
     private Endpoint endpoint() {
         return retrofit().create(Endpoint.class);
     }
