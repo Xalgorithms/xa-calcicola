@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -13,6 +14,7 @@ import org.lichen.garni.adapters.InvoiceItemsAdapter;
 import org.lichen.garni.adapters.Receiver;
 import org.lichen.garni.data.Documents;
 import org.lichen.geghard.api.Client;
+import org.lichen.geghard.api.EventResponse;
 import org.lichen.geghard.api.InvoiceDocument;
 import org.lichen.geghard.api.Line;
 
@@ -33,12 +35,23 @@ public class AffectedInvoiceActivity extends CoreActivity {
     @BindView(R.id.label_affected_invoice_total) TextView _total;
     @BindView(R.id.label_affected_invoice_issued) TextView _issued;
     @BindView(R.id.label_affected_invoice_due) TextView _due;
+    @BindView(R.id.action_affected_invoice_lichenize) Button _lichenize;
     @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
 
     @Inject Client _client;
     @Inject Documents _documents;
 
     private InvoiceItemsAdapter _adapter;
+    private final ClickBehaviours _behaviours = new ClickBehaviours();
+    private final Action1<Integer> _reactions = new Action1<Integer>() {
+        @Override
+        public void call(Integer id) {
+            switch (id) {
+                case R.id.action_affected_invoice_lichenize:
+                    execute_transaction();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +71,8 @@ public class AffectedInvoiceActivity extends CoreActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        remember(_behaviours.bindById(_lichenize, _reactions));
         if (!_documents.exists(document_id())) {
             remember(populate_from_api(document_id()));
         } else {
@@ -68,6 +83,8 @@ public class AffectedInvoiceActivity extends CoreActivity {
     private String document_id() {
         return getIntent().getStringExtra(Constants.ARG_DOCUMENT_ID);
     }
+
+    private String transaction_id() { return getIntent().getStringExtra(Constants.ARG_TRANSACTION_ID); }
 
     private Subscription populate_from_api(final String document_id) {
         return _client.document(document_id)
@@ -87,6 +104,19 @@ public class AffectedInvoiceActivity extends CoreActivity {
                     }
                 })
                 .subscribe();
+    }
+
+    private void execute_transaction() {
+        Subscription sub = _client.execute(transaction_id())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<EventResponse>() {
+                    @Override
+                    public void call(EventResponse r) {
+
+                    }
+                });
+        remember(sub);
     }
 
     private void populate(InvoiceDocument doc) {
