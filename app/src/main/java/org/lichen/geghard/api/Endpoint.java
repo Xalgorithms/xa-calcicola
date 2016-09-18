@@ -22,4 +22,7 @@ public interface Endpoint {
 
     @POST("/api/v1/events")
     Observable<EventResponse> post_event(@Body Event e);
+
+    @GET("/api/v1/invoices/{id}/change")
+    Observable<Change> get_invoice_change(@Path("id") String invoice_id);
 }

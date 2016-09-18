@@ -30,8 +30,16 @@ public class Client {
         return endpoint().document(id);
     }
 
+    public Observable<Change> get_invoice_change(String invoice_id) {
+        return endpoint().get_invoice_change(invoice_id);
+    }
+
     public Observable<EventResponse> register(int user_id, String token) {
         return endpoint().post_event(Event.make_register(user_id, token));
+    }
+
+    public Observable<EventResponse> execute(String transaction_id) {
+        return endpoint().post_event(Event.make_execute(transaction_id));
     }
 
     private Endpoint endpoint() {
