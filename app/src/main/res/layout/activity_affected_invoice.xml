@@ -55,15 +55,6 @@
                     android:textSize="16sp"
                     android:textAllCaps="true"
                     android:text="@string/label_invoice_total"/>
-                <Button
-                    android:id="@+id/action_affected_invoice_lichenize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_invoice_lichenize"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true">
-                </Button>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -103,6 +94,23 @@
                     android:textSize="12sp"
                     android:text="@string/label_invoice_due"/>
             </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/action_affected_invoice_show_changes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_invoice_show_changes">
+                </Button>
+                <Button
+                    android:id="@+id/action_affected_invoice_lichenize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_invoice_lichenize">
+                </Button>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

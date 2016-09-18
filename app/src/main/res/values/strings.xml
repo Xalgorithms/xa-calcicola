@@ -22,6 +22,7 @@
 
     <string name="label_invoice_total">total</string>
     <string name="label_invoice_lichenize">Lichenize</string>
+    <string name="label_invoice_show_changes">Show changes</string>
     <string name="label_invoice_due">Due</string>
     <string name="label_invoice_issued">Issued</string>
     <string name="label_invoice_items">Items</string>

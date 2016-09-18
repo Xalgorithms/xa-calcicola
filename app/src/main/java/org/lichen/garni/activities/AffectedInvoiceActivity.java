@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
 import org.lichen.garni.R;
@@ -37,6 +38,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     @BindView(R.id.label_affected_invoice_issued) TextView _issued;
     @BindView(R.id.label_affected_invoice_due) TextView _due;
     @BindView(R.id.action_affected_invoice_lichenize) Button _lichenize;
+    @BindView(R.id.action_affected_invoice_show_changes) Button _show_changes;
     @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
 
     @Inject Client _client;
@@ -53,6 +55,10 @@ public class AffectedInvoiceActivity extends CoreActivity {
             switch (id) {
                 case R.id.action_affected_invoice_lichenize:
                     execute_transaction();
+                    break;
+                case R.id.action_affected_invoice_show_changes:
+                    Invocations.launchInvoiceChanges(AffectedInvoiceActivity.this, invoice_id());
+                    break;
             }
         }
     };
@@ -76,7 +82,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     public void onResume() {
         super.onResume();
 
-        remember(_behaviours.bindById(_lichenize, _reactions));
+        remember(_behaviours.bindById(Lists.newArrayList((View) _lichenize, _show_changes), _reactions));
         remember(pull_latest());
         remember(subscribe_to_latest_document());
     }

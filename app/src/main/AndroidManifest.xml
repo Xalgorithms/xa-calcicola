@@ -32,6 +32,9 @@
         <activity
             android:name=".activities.AffectedInvoiceActivity"
             android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".activities.InvoiceChangesActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <!-- GCM -->
         <receiver

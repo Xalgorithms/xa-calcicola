@@ -9,6 +9,7 @@ import dagger.Module;
                 LoginActivity.class,
                 UserInvoicesActivity.class,
                 AffectedInvoiceActivity.class,
+                InvoiceChangesActivity.class,
         },
         complete = false,
         library = true
