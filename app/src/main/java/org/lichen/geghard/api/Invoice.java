@@ -12,7 +12,12 @@ public class Invoice {
         public Document document;
     }
 
+    public class Transaction {
+        public String id;
+    }
+
     public String id;
+    public Transaction transaction;
     public List<Revision> revisions;
 }
 
