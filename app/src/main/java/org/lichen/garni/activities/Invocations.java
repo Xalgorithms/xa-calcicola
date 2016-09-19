@@ -14,9 +14,10 @@ public class Invocations {
         ctx.startActivity(i);
     }
 
-    public static void launchInvoiceChanges(Context ctx, String invoice_id) {
+    public static void launchInvoiceChanges(Context ctx, String invoice_id, String invoice_document_id) {
         Intent i = new Intent(ctx, InvoiceChangesActivity.class);
         i.putExtra(Constants.ARG_INVOICE_ID, invoice_id);
+        i.putExtra(Constants.ARG_DOCUMENT_ID, invoice_document_id);
         ctx.startActivity(i);
     }
 

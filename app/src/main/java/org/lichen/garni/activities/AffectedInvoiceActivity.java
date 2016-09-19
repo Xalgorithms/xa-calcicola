@@ -47,6 +47,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     private final PublishSubject<InvoiceDocument> _latest_document = PublishSubject.create();
 
     private InvoiceItemsAdapter _adapter;
+    private InvoiceDocument _invoice;
 
     private final ClickBehaviours _behaviours = new ClickBehaviours();
     private final Action1<Integer> _reactions = new Action1<Integer>() {
@@ -57,7 +58,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
                     execute_transaction();
                     break;
                 case R.id.action_affected_invoice_show_changes:
-                    Invocations.launchInvoiceChanges(AffectedInvoiceActivity.this, invoice_id());
+                    Invocations.launchInvoiceChanges(AffectedInvoiceActivity.this, invoice_id(), _invoice.document_id());
                     break;
             }
         }
@@ -112,13 +113,19 @@ public class AffectedInvoiceActivity extends CoreActivity {
                 .subscribe(new Action1<Invoice.Document>() {
                     @Override
                     public void call(final Invoice.Document doc) {
-                        // TODO: use doc.url (need to figure out how raw URLs work in the lib)
-                        remember(pull_document(doc.id, new Action1<JsonObject>() {
-                            @Override
-                            public void call(JsonObject o) {
-                                _latest_document.onNext(new InvoiceDocument(doc.id, o));
-                            }
-                        }));
+                        if (_documents.exists(doc.id)) {
+                            _latest_document.onNext(_documents.get(doc.id));
+                        } else {
+                            // TODO: use doc.url (need to figure out how raw URLs work in the lib)
+                            remember(pull_document(doc.id, new Action1<JsonObject>() {
+                                @Override
+                                public void call(JsonObject o) {
+                                    InvoiceDocument id = new InvoiceDocument(doc.id, o);
+                                    _documents.add(id);
+                                    _latest_document.onNext(id);
+                                }
+                            }));
+                        }
                     }
                 });
     }
@@ -144,6 +151,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     }
 
     private void populate(InvoiceDocument doc) {
+        _invoice = doc;
         _id.setText(doc.id());
         _payee.setText(getString(R.string.fmt_invoice_payee, doc.customer().name(), "Company"));
         _total.setText(doc.format_total());

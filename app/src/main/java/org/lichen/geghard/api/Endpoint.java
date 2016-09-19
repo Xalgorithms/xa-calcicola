@@ -24,7 +24,7 @@ public interface Endpoint {
     Observable<EventResponse> post_event(@Body Event e);
 
     @GET("/api/v1/invoices/{id}/change")
-    Observable<Change> get_invoice_change(@Path("id") String invoice_id);
+    Observable<Change> invoice_change(@Path("id") String invoice_id);
 
     @GET("/api/v1/invoices/{id}/latest")
     Observable<Invoice.Document> invoice_latest(@Path("id") String invoice_id);

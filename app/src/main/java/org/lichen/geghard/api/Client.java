@@ -30,8 +30,8 @@ public class Client {
         return endpoint().document(id);
     }
 
-    public Observable<Change> get_invoice_change(String invoice_id) {
-        return endpoint().get_invoice_change(invoice_id);
+    public Observable<Change> invoice_change(String invoice_id) {
+        return endpoint().invoice_change(invoice_id);
     }
 
     public Observable<EventResponse> register(int user_id, String token) {

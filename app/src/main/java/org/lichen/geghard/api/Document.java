@@ -61,6 +61,17 @@ public class Document {
         return Lists.transform(Lists.newArrayList(_object.getAsJsonArray(k)), fn);
     }
 
+    public List<JsonObject> collection(String k) {
+        return Lists.transform(
+                Lists.newArrayList(_object.getAsJsonArray(k)),
+                new Function<JsonElement, JsonObject>() {
+                    @Override
+                    public JsonObject apply(JsonElement el) {
+                        return el.getAsJsonObject();
+                    }
+                });
+    }
+
     protected JsonObject locate(String k) {
         return locate(_object, Lists.newArrayList(Splitter.on('.').split(k)));
     }

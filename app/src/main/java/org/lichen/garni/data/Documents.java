@@ -6,6 +6,8 @@ import org.lichen.geghard.api.InvoiceDocument;
 
 import java.util.Map;
 
+import rx.functions.Func1;
+
 public class Documents {
     private Map<String, InvoiceDocument> _documents = Maps.newConcurrentMap();
 
