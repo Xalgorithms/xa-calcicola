@@ -39,20 +39,22 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
     public void onMessageReceived(String from, Bundle data) {
         String document_id = data.getString("document_id", null);
         final String invoice_id = data.getString("invoice_id", null);
+        final String transaction_id = data.getString("transaction_id", null);
 
         find_document(document_id, new Function<InvoiceDocument, Void>() {
             @Override
             public Void apply(InvoiceDocument doc) {
-                send_notification(doc, invoice_id);
+                send_notification(doc, invoice_id, transaction_id);
                 return null;
             }
         });
     }
 
-    private void send_notification(InvoiceDocument doc, String invoice_id) {
+    private void send_notification(InvoiceDocument doc, String invoice_id, String transaction_id) {
         Intent i = new Intent(this, AffectedInvoiceActivity.class);
         i.putExtra(Constants.ARG_DOCUMENT_ID, doc.document_id());
         i.putExtra(Constants.ARG_INVOICE_ID, invoice_id);
+        i.putExtra(Constants.ARG_TRANSACTION_ID, transaction_id);
 
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
