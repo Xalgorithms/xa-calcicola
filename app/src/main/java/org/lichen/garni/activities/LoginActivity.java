@@ -13,6 +13,10 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.common.collect.Lists;
 import com.squareup.sqlbrite.BriteDatabase;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+import net.hockeyapp.android.metrics.MetricsManager;
+
 import org.lichen.garni.R;
 import org.lichen.garni.services.RegistrationIntentService;
 
@@ -54,6 +58,13 @@ public class LoginActivity extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(R.layout.activity_login);
+        registerWithHockey();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
     }
 
     @Override
@@ -62,6 +73,13 @@ public class LoginActivity extends CoreActivity {
 
         remember(subscribe_to_connect());
         remember(_click_behaviours.bindById(Lists.newArrayList((View) _login), _click_reactions));
+        checkForCrashes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
     }
 
     private Subscription subscribe_to_connect() {
@@ -127,5 +145,20 @@ public class LoginActivity extends CoreActivity {
         }
 
         return true;
+    }
+
+    // Hockey stuff
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void registerWithHockey() {
+        // TODO: Remove when we're in the store (probably with prod/dev builds)
+        UpdateManager.register(this);
+        MetricsManager.register(getApplication());
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
     }
 }

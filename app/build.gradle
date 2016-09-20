@@ -11,6 +11,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "cb03b0055378415994def7b3c32e3ada"]
     }
     buildTypes {
         release {
@@ -54,6 +55,8 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
+
+    compile 'net.hockeyapp.android:HockeySDK:4.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
