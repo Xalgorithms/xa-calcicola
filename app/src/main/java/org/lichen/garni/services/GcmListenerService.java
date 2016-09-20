@@ -13,6 +13,7 @@ import com.google.common.base.Function;
 import com.google.gson.JsonObject;
 
 import org.lichen.garni.GarniApp;
+import org.lichen.garni.R;
 import org.lichen.garni.activities.AffectedInvoiceActivity;
 import org.lichen.garni.activities.Constants;
 import org.lichen.garni.data.Documents;
@@ -59,7 +60,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder bldr = new NotificationCompat.Builder(this)
-                .setSmallIcon(android.R.drawable.ic_menu_compass)
+                .setSmallIcon(R.mipmap.ic_logo)
                 .setContentTitle("Invoice from " + doc.customer().contact_name())
                 .setContentText("Touch to view details")
                 .setAutoCancel(true)
