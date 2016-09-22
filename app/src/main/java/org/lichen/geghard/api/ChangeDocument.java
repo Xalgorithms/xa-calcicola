@@ -1,12 +1,9 @@
 package org.lichen.geghard.api;
 
 import com.google.common.collect.Lists;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 
 public class ChangeDocument {
     private static class InvoiceFilterDocument {
