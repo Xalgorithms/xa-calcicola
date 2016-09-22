@@ -25,7 +25,7 @@ android {
         applicationId "org.lichen.garni"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "cb03b0055378415994def7b3c32e3ada"]
     }
