@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class RecyclerCollectionAdapter<VHT extends RecyclerView.ViewHolder, T>
         extends RecyclerView.Adapter<VHT> {
     private final Context _ctx;
-    private final Receiver _receiver;
+    private final Receiver<T> _receiver;
     private List<T> _collection = Lists.newArrayList();
 
     public RecyclerCollectionAdapter(Context ctx, Receiver<T> r) {
