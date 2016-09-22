@@ -13,6 +13,7 @@ android:
 script: "./gradlew assembleRelease"
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: TnQRdUHScLXg1EOXOF8qktSlVTEBO8GQuFxM0dOZIfoeqDM+t0MTFnwCWfD6wIfXFBKvFPm435wQchP4E++YRinDsCQAVjPOLNiG+AVUHOfvOvbB94i9FGhd+MZMwckhNJyj/u0j2TsbVN50tn4+ol8eodX8PKG5k7NQfgIIZJFgC6o5DnCeOctVCE38yzvO2q19VJAlSh0oEvu7nTVpsM1pn/g0wid2fhAbTx1K+rzUkltMn4CLQ4ZmjkhF0uw8cG2GUDLvWMc5aRnG76lukpbnZxL6gLgoBj3t9YqzcQ1ZjVPnB46vcW5p6Tc+R9amnUWX3ONX1iMSLYuwd6VbcE1rij9BHGncEQzAhp4TJVsMuQJzhboWc/v5zYiP/1uOFJAnk3YD5FC1+RjixDNySyBo9/a6TwF0PgfAsiYrnuj1ewgkYU/UZd3vE4jP+6RLoUvZMrYq+iN/pVHI4VndLifufKbvVgxEKWwfqdjf9QzFQZx/8Nckj3jtsZCd9QRY701/PEuoifuJVnRok3w9BG7vHT8DvjkItfRBrB9DGjExTiyI/4wYhASD3Sn7pzmeSV2EJRAZctOCZn00DEBhnZ/T4c4NQ6DrQshGrQ9d+pj7eFoR8xWvqrpBdsd8REVG95X0+BHpEPcbb7UVvomRwjq/2gfmCvRWXhNtkAS3Mr4=
   file: app/app-release.apk
