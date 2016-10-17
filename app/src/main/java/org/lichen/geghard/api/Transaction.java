@@ -18,8 +18,13 @@ public class Transaction {
         Transformation transformation;
     }
 
+    public class User {
+        public String email;
+    }
+
     public String id;
     public String status;
     public List<Invoice> invoices;
     public List<Association> associations;
+    public User user;
 }

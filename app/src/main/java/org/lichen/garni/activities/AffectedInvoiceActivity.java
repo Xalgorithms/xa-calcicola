@@ -94,6 +94,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
         remember(_behaviours.bindById(Lists.newArrayList((View) _lichenize, _show_changes), _reactions));
         remember(pull_latest());
         remember(subscribe_to_latest_document());
+        show_progress();
     }
 
     private String invoice_id() {
@@ -125,6 +126,8 @@ public class AffectedInvoiceActivity extends CoreActivity {
                             _changes.setVisibility(View.VISIBLE);
                             _lichenize_component.setVisibility(View.GONE);
                         }
+                        update_title(invoice_doc.id());
+                        hide_progress();
                         populate(invoice_doc);
                     }
                 });

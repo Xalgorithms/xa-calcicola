@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/component_toolbar" />
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="@dimen/lichen_activity_padding_top"
@@ -10,6 +17,7 @@
         android:paddingEnd="@dimen/lichen_activity_padding_end"
         android:orientation="vertical"
         android:background="@color/lichen_invoice_background">
+
         <include
             android:id="@+id/component_person_customer"
             layout="@layout/component_person" />
@@ -45,3 +53,5 @@
             android:layout_marginTop="@dimen/lichen_component_inter_spacing"
             layout="@layout/component_invoice_items" />
     </LinearLayout>
+</LinearLayout>
+

@@ -15,13 +15,13 @@
         android:name=".GarniApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <meta-data android:name="net.hockeyapp.android.appIdentifier" android:value="${HOCKEYAPP_APP_ID}" />
 
         <activity
-            android:name=".activities.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,14 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.UserInvoicesActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:name=".activities.UserInvoicesActivity" />
         <activity
-            android:name=".activities.AffectedInvoiceActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:name=".activities.AffectedInvoiceActivity" />
         <activity
-            android:name=".activities.InvoiceChangesActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:name=".activities.InvoiceChangesActivity" />
 
         <!-- GCM -->
         <receiver
