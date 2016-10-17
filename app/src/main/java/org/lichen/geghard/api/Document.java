@@ -57,6 +57,10 @@ public class Document {
         return _object.get(k).getAsDouble();
     }
 
+    public Person person(String k) {
+        return new Person(locate(k));
+    }
+
     public <T extends Document> List<T> collection(String k, Function<JsonElement, T> fn) {
         return Lists.transform(Lists.newArrayList(_object.getAsJsonArray(k)), fn);
     }

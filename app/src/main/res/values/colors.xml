@@ -3,4 +3,5 @@
     <color name="garni_light_blue">#42a5f5</color>
     <color name="garni_light_grey">#eeeeee</color>
     <color name="text_main_user">#ffffff</color>
+    <color name="lichen_invoice_background">#ffe6e6e6</color>
 </resources>

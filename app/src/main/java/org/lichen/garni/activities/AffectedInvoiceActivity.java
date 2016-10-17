@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -20,8 +19,6 @@ import org.lichen.geghard.api.Invoice;
 import org.lichen.geghard.api.InvoiceDocument;
 import org.lichen.geghard.api.Line;
 
-import java.text.DateFormat;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -32,13 +29,12 @@ import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
 public class AffectedInvoiceActivity extends CoreActivity {
-    @BindView(R.id.label_invoice_id) TextView _id;
-    @BindView(R.id.label_affected_invoice_payee) TextView _payee;
-    @BindView(R.id.label_affected_invoice_total) TextView _total;
-    @BindView(R.id.label_affected_invoice_issued) TextView _issued;
-    @BindView(R.id.label_affected_invoice_due) TextView _due;
-    @BindView(R.id.action_affected_invoice_lichenize) Button _lichenize;
-    @BindView(R.id.action_affected_invoice_show_changes) Button _show_changes;
+    @BindView(R.id.component_person_customer) View _customer;
+    @BindView(R.id.component_person_supplier) View _supplier;
+    @BindView(R.id.component_summary) View _summary;
+    @BindView(R.id.component_changes) View _changes;
+    @BindView(R.id.action_lichenize) Button _lichenize;
+    @BindView(R.id.action_show_changes) Button _show_changes;
     @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
 
     @Inject Client _client;
@@ -54,21 +50,23 @@ public class AffectedInvoiceActivity extends CoreActivity {
         @Override
         public void call(Integer id) {
             switch (id) {
-                case R.id.action_affected_invoice_lichenize:
+                case R.id.action_lichenize:
                     execute_transaction();
                     break;
-                case R.id.action_affected_invoice_show_changes:
+                case R.id.action_show_changes:
                     Invocations.launchInvoiceChanges(AffectedInvoiceActivity.this, invoice_id(), _invoice.document_id());
                     break;
             }
         }
     };
+    private ViewAdapter _view_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(R.layout.activity_affected_invoice);
 
+        _view_adapter = new ViewAdapter(this);
         _adapter = new InvoiceItemsAdapter(this, new Receiver<Line>() {
             @Override
             public void receive(View v, Line it) {
@@ -152,11 +150,10 @@ public class AffectedInvoiceActivity extends CoreActivity {
 
     private void populate(InvoiceDocument doc) {
         _invoice = doc;
-        _id.setText(doc.id());
-        _payee.setText(getString(R.string.fmt_invoice_payee, doc.customer().name(), "Company"));
-        _total.setText(doc.format_total());
-        _issued.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(doc.issued()));
-        _due.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(doc.issued()));
+        _view_adapter.person(doc.customer(), _customer);
+        _view_adapter.person(doc.supplier(), _supplier);
+        _view_adapter.summary(doc, _summary);
+        _view_adapter.changes(doc, _changes);
         _adapter.update(doc.lines());
     }
 }

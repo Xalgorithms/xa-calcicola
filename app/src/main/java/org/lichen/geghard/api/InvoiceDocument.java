@@ -28,8 +28,12 @@ public class InvoiceDocument extends Document {
         return date("issued");
     }
 
-    public Customer customer() {
-        return new Customer(locate("parties.customer"));
+    public Person customer() {
+        return person("parties.customer");
+    }
+
+    public Person supplier() {
+        return person("parties.supplier");
     }
 
     public List<Line> lines() {
