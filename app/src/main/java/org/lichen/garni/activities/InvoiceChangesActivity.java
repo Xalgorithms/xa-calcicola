@@ -71,24 +71,28 @@ public class InvoiceChangesActivity extends CoreActivity {
     }
 
     private Subscription subscribe_to_latest_change() {
+        show_progress();
         return _latest_change
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ChangeDocument>() {
                     @Override
                     public void call(ChangeDocument cd) {
+                        hide_progress();
                         populate(cd);
                     }
                 });
     }
 
     private Subscription pull_changes() {
+        show_progress();
         return _client.invoice_change(invoice_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Change>() {
                     @Override
                     public void call(Change change) {
+                        hide_progress();
                         ChangeDocument cd = new ChangeDocument(_invoice, change.previous, change.latest);
                         _latest_change.onNext(cd);
                     }
