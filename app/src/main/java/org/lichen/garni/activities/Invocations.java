@@ -11,6 +11,7 @@ public class Invocations {
         Intent i = new Intent(ctx, AffectedInvoiceActivity.class);
         i.putExtra(Constants.ARG_INVOICE_ID, iv.id);
         i.putExtra(Constants.ARG_TRANSACTION_ID, iv.transaction.id);
+        i.putExtra(Constants.ARG_LICHENIZED, iv.revisions.size() > 1);
         ctx.startActivity(i);
     }
 

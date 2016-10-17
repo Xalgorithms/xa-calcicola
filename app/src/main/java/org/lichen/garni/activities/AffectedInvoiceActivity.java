@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -33,9 +35,12 @@ public class AffectedInvoiceActivity extends CoreActivity {
     @BindView(R.id.component_person_supplier) View _supplier;
     @BindView(R.id.component_summary) View _summary;
     @BindView(R.id.component_changes) View _changes;
+    @BindView(R.id.component_lichenize) View _lichenize_component;
     @BindView(R.id.action_lichenize) Button _lichenize;
     @BindView(R.id.action_show_changes) Button _show_changes;
     @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
+    @BindView(R.id.progress_lichenize) ProgressBar _progress;
+    @BindView(R.id.text_lichenize) TextView _lichenize_text;
 
     @Inject Client _client;
     @Inject Documents _documents;
@@ -51,6 +56,9 @@ public class AffectedInvoiceActivity extends CoreActivity {
         public void call(Integer id) {
             switch (id) {
                 case R.id.action_lichenize:
+                    _lichenize_text.setVisibility(View.GONE);
+                    _progress.setVisibility(View.VISIBLE);
+                    _lichenize.setClickable(false);
                     execute_transaction();
                     break;
                 case R.id.action_show_changes:
@@ -60,6 +68,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
         }
     };
     private ViewAdapter _view_adapter;
+    private boolean _executed_lichenize = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +90,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     public void onResume() {
         super.onResume();
 
+        init();
         remember(_behaviours.bindById(Lists.newArrayList((View) _lichenize, _show_changes), _reactions));
         remember(pull_latest());
         remember(subscribe_to_latest_document());
@@ -92,6 +102,15 @@ public class AffectedInvoiceActivity extends CoreActivity {
 
     private String transaction_id() { return getIntent().getStringExtra(Constants.ARG_TRANSACTION_ID); }
 
+    private boolean lichenized() { return getIntent().getBooleanExtra(Constants.ARG_LICHENIZED, false); }
+
+    private void init() {
+        if (lichenized()) {
+            _changes.setVisibility(View.VISIBLE);
+            _lichenize_component.setVisibility(View.GONE);
+        }
+    }
+
     private Subscription subscribe_to_latest_document() {
         return _latest_document
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -99,6 +118,13 @@ public class AffectedInvoiceActivity extends CoreActivity {
                 .subscribe(new Action1<InvoiceDocument>() {
                     @Override
                     public void call(InvoiceDocument invoice_doc) {
+                        _lichenize_text.setVisibility(View.VISIBLE);
+                        _progress.setVisibility(View.GONE);
+                        _lichenize.setClickable(true);
+                        if (_executed_lichenize) {
+                            _changes.setVisibility(View.VISIBLE);
+                            _lichenize_component.setVisibility(View.GONE);
+                        }
                         populate(invoice_doc);
                     }
                 });
@@ -107,7 +133,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     private Subscription pull_latest() {
         return _client.invoice_latest(invoice_id())
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .subscribe(new Action1<Invoice.Document>() {
                     @Override
                     public void call(final Invoice.Document doc) {
@@ -142,6 +168,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
                 .subscribe(new Action1<EventResponse>() {
                     @Override
                     public void call(EventResponse r) {
+                        _executed_lichenize = true;
                         pull_latest();
                     }
                 });

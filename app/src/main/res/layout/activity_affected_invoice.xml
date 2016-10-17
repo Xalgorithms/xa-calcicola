@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/lichen_component_inter_spacing"
             layout="@layout/component_lichenize" />
         <include
-            android:id="@+id/component_lichenize"
+            android:id="@+id/component_changes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/lichen_component_inter_spacing"
