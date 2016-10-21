@@ -108,7 +108,7 @@ public class UserInvoicesAdapter extends RecyclerCollectionAdapter<UserInvoicesA
     }
 
     private void populate(ViewHolder vh, InvoiceDocument doc) {
-        vh.name.setText(doc.customer().contact_name());
+        vh.name.setText(doc.customer().name());
         vh.total.setText(doc.format_total());
         vh.company.setText(doc.customer().name());
         vh.status.setText("Status");

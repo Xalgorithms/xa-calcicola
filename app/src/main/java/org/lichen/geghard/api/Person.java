@@ -8,7 +8,8 @@ public class Person extends Document {
     }
 
     public String name() {
-        return string("name");
+        String rv = contact_name();
+        return null != rv ? rv : string("name");
     }
 
     public String city() { return string(locate("address"), "city"); }
@@ -17,6 +18,6 @@ public class Person extends Document {
 
     public String contact_name() {
         JsonObject o = locate("person.name");
-        return String.format("%s %s", string(o, "first"), string(o, "family"));
+        return null != o ? String.format("%s %s", string(o, "first"), string(o, "family")) : null;
     }
 }
