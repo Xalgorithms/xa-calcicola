@@ -17,6 +17,7 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 import net.hockeyapp.android.metrics.MetricsManager;
 
+import org.lichen.garni.BuildConfig;
 import org.lichen.garni.R;
 import org.lichen.garni.services.RegistrationIntentService;
 
@@ -149,13 +150,17 @@ public class LoginActivity extends CoreActivity {
 
     // Hockey stuff
     private void checkForCrashes() {
-        CrashManager.register(this);
+        if (!BuildConfig.DEBUG) {
+            CrashManager.register(this);
+        }
     }
 
     private void registerWithHockey() {
-        // TODO: Remove when we're in the store (probably with prod/dev builds)
-        UpdateManager.register(this);
-        MetricsManager.register(getApplication());
+        if (!BuildConfig.DEBUG) {
+            // TODO: Remove when we're in the store (probably with prod/dev builds)
+            UpdateManager.register(this);
+            MetricsManager.register(getApplication());
+        }
     }
 
     private void unregisterManagers() {
