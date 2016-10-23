@@ -26,7 +26,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 4
-        versionName "0.1"
+        versionName "0.2.0"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "cb03b0055378415994def7b3c32e3ada"]
     }
     buildTypes {
