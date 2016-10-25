@@ -51,8 +51,30 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="2dp"
             android:padding="12dp"
+            android:clickable="false"
+            android:enabled="false"
             android:text="Login"/>
 
+        <ProgressBar
+            android:id="@+id/progress_login_login"
+            android:indeterminate="true"
+            android:maxHeight="24dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
+
+
+        <TextView android:id="@+id/label_login_failed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/label_login_failed"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="#ffff0000"
+            android:textSize="16sp"/>
 
         <TextView android:id="@+id/link_login_signup"
             android:layout_width="fill_parent"
@@ -61,6 +83,5 @@
             android:text="No account yet? Create one"
             android:gravity="center"
             android:textSize="16dip"/>
-
     </LinearLayout>
 </ScrollView>

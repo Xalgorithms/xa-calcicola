@@ -36,4 +36,5 @@
 
     <string name="gcm_sender_id">929318564370</string>
     <string name="label_invoice_changes_changes">Changes</string>
+    <string name="label_login_failed">Login failed. Verify your credentials.</string>
 </resources>

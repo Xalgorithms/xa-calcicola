@@ -22,8 +22,10 @@ public class Invocations {
         ctx.startActivity(i);
     }
 
-    public static void launchUserInvoices(Context ctx) {
+    public static void launchUserInvoices(Context ctx, String user_id, String email) {
         Intent i = new Intent(ctx, UserInvoicesActivity.class);
+        i.putExtra(Constants.ARG_USER_ID, user_id);
+        i.putExtra(Constants.ARG_USER_EMAIL, email);
         ctx.startActivity(i);
     }
 }

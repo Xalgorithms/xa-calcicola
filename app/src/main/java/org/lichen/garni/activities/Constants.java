@@ -8,6 +8,7 @@ public class Constants {
     public static final String ARG_INVOICE_ID = "org.lichen.garni.intents.ARGS.INVOICE_ID";
     public static final String ARG_DOCUMENT_ID = "org.lichen.garni.intents.ARGS.DOCUMENT_ID";
     public static final String ARG_LICHENIZED = "org.lichen.garni.intents.ARGS.LICHENIZED";
+    public static final String ARG_USER_EMAIL = "org.lichen.garni.intents.ARGS.USER_EMAIL";
 
     public static final int REQUEST_ACCOUNT = 4001;
 }

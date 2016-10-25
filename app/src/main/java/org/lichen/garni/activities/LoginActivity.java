@@ -7,10 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.common.collect.Lists;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.squareup.sqlbrite.BriteDatabase;
 
 import net.hockeyapp.android.CrashManager;
@@ -20,6 +24,11 @@ import net.hockeyapp.android.metrics.MetricsManager;
 import org.lichen.garni.BuildConfig;
 import org.lichen.garni.R;
 import org.lichen.garni.services.RegistrationIntentService;
+import org.lichen.geghard.api.Client;
+import org.lichen.geghard.api.Completion;
+import org.lichen.geghard.api.User;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -28,15 +37,17 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
 import timber.log.Timber;
 
 public class LoginActivity extends CoreActivity {
     @Inject BriteDatabase _db;
+    @Inject Client _client;
 
     @BindView(R.id.input_login_email) EditText _email;
     @BindView(R.id.input_login_password) EditText _password;
     @BindView(R.id.action_login_login) Button _login;
+    @BindView(R.id.progress_login_login) ProgressBar _progress;
+    @BindView(R.id.label_login_failed) TextView _label_login_failed;
 
     private final ClickBehaviours _click_behaviours = new ClickBehaviours();
     private final Action1<Integer> _click_reactions = new Action1<Integer>() {
@@ -44,16 +55,11 @@ public class LoginActivity extends CoreActivity {
         public void call(Integer id) {
             switch (id) {
                 case R.id.action_login_login:
-                    connect();
+                    login(_email.getText().toString());
+                    break;
             }
         }
     };
-
-    private final PublishSubject<Void> _connect = PublishSubject.create();
-
-    private void connect() {
-        _connect.onNext(null);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +78,13 @@ public class LoginActivity extends CoreActivity {
     public void onResume() {
         super.onResume();
 
-        remember(subscribe_to_connect());
+        reset_login_widgets();
+
+        // FIXME: temporary
+        _email.setText("bob@nowhere.com");
+
         remember(_click_behaviours.bindById(Lists.newArrayList((View) _login), _click_reactions));
+        remember(login_text_change());
         checkForCrashes();
     }
 
@@ -83,15 +94,57 @@ public class LoginActivity extends CoreActivity {
         unregisterManagers();
     }
 
-    private Subscription subscribe_to_connect() {
-        return _connect.subscribeOn(Schedulers.io())
+    private void show_login_progress() {
+        _progress.setVisibility(View.VISIBLE);
+        _login.setVisibility(View.GONE);
+        _label_login_failed.setVisibility(View.GONE);
+    }
+
+    private void hide_login_progress() {
+        _progress.setVisibility(View.GONE);
+        _login.setVisibility(View.VISIBLE);
+    }
+
+    private void reset_login_widgets() {
+        hide_login_progress();
+        _label_login_failed.setVisibility(View.GONE);
+    }
+
+    private void show_login_failure() {
+        hide_login_progress();
+        _label_login_failed.setVisibility(View.VISIBLE);
+    }
+
+    private void login(String email) {
+        show_login_progress();
+        remember(_client.user(email)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Void>() {
+                .subscribe(new Completion<User>() {
                     @Override
-                    public void call(Void aVoid) {
-                        if (gcmUp()) {
-                            Invocations.launchUserInvoices(LoginActivity.this);
+                    protected void response(User u) {
+                        if (gcmUp(u.id)) {
+                            Invocations.launchUserInvoices(LoginActivity.this, u.id, u.email);
                         }
+                    }
+
+                    @Override
+                    protected void handle_404() {
+                        show_login_failure();
+                    }
+                }));
+    }
+
+    private Subscription login_text_change() {
+        return RxTextView.textChangeEvents(_email)
+                .debounce(250, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<TextViewTextChangeEvent>() {
+                    @Override
+                    public void call(TextViewTextChangeEvent e) {
+                        boolean enabled = e.text().length() > 0;
+                        _login.setClickable(enabled);
+                        _login.setEnabled(enabled);
                     }
                 });
     }
@@ -118,9 +171,10 @@ public class LoginActivity extends CoreActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean gcmUp() {
+    private boolean gcmUp(String user_id) {
         if (checkPlayServices()) {
             Intent i = new Intent(this, RegistrationIntentService.class);
+            i.putExtra(Constants.ARG_USER_ID, user_id);
             startService(i);
 
             return true;

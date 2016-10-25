@@ -7,7 +7,6 @@ import android.widget.ProgressBar;
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CoreActivity extends RxActivity {

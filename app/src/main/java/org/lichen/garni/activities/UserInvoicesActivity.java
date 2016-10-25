@@ -12,7 +12,6 @@ import org.lichen.garni.adapters.Receiver;
 import org.lichen.garni.adapters.UserInvoicesAdapter;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.Invoice;
-import org.lichen.geghard.api.Transaction;
 
 import java.util.List;
 
@@ -57,9 +56,10 @@ public class UserInvoicesActivity extends CoreActivity {
     @Override
     public void onResume() {
         super.onResume();
+
         Timber.d("> resuming");
+        update_title(user_email());
         remember(populate_invoices());
-        remember(populate_transactions());
     }
 
     @Override
@@ -73,10 +73,18 @@ public class UserInvoicesActivity extends CoreActivity {
         return super.onOptionsItemSelected(mi);
     }
 
+    private String user_id() {
+        return getIntent().getStringExtra(Constants.ARG_USER_ID);
+    }
+
+    private String user_email() {
+        return getIntent().getStringExtra(Constants.ARG_USER_EMAIL);
+    }
+
     private Subscription populate_invoices() {
         show_progress();
         Timber.d("> populating invoices");
-        return _client.user_invoices(1)
+        return _client.user_invoices(user_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Invoice>>() {
@@ -85,22 +93,6 @@ public class UserInvoicesActivity extends CoreActivity {
                         hide_progress();
                         Timber.d("> received invoices (size=%s)", invoices.size());
                         _adapter.update(invoices);
-                    }
-                });
-    }
-
-    // this is a hack until we extend the API to support user queries
-    private Subscription populate_transactions() {
-        Timber.d("> populating transactions");
-        show_progress();
-        return _client.user_transactions(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Transaction>>() {
-                    @Override
-                    public void call(List<Transaction> transactions) {
-                        hide_progress();
-                        update_title(transactions.get(0).user.email);
                     }
                 });
     }
