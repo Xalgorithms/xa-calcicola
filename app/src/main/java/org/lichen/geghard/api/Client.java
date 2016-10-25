@@ -41,7 +41,7 @@ public class Client {
         return endpoint().invoice_change(invoice_id);
     }
 
-    public Observable<EventResponse> register(int user_id, String token) {
+    public Observable<EventResponse> register(String user_id, String token) {
         return endpoint().post_event(Event.make_register(user_id, token));
     }
 

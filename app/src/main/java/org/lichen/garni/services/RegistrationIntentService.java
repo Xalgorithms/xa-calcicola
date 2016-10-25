@@ -2,8 +2,6 @@ package org.lichen.garni.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -11,6 +9,7 @@ import com.google.android.gms.iid.InstanceID;
 
 import org.lichen.garni.GarniApp;
 import org.lichen.garni.R;
+import org.lichen.garni.activities.Constants;
 import org.lichen.geghard.api.Client;
 import org.lichen.geghard.api.EventResponse;
 
@@ -44,7 +43,7 @@ public class RegistrationIntentService extends IntentService {
             // oops
         }
 
-        sendRegistrationToServer(token);
+        sendRegistrationToServer(token, intent.getStringExtra(Constants.ARG_USER_ID));
         subscribe(token);
 
         // LBM notify complete
@@ -59,8 +58,8 @@ public class RegistrationIntentService extends IntentService {
         }
     }
 
-    private void sendRegistrationToServer(String token) {
-        _client.register(1, token)
+    private void sendRegistrationToServer(String token, String user_id) {
+        _client.register(user_id, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(new Action1<EventResponse>() {
