@@ -4,12 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import timber.log.Timber;
 
 public class Client {
     private final String _url;
@@ -22,11 +25,11 @@ public class Client {
         return endpoint().invoice(id);
     }
 
-    public Observable<List<Invoice>> user_invoices(int user_id) {
+    public Observable<List<Invoice>> user_invoices(String user_id) {
         return endpoint().user_invoices(user_id);
     }
 
-    public Observable<List<Transaction>> user_transactions(int user_id) {
+    public Observable<List<Transaction>> user_transactions(String user_id) {
         return endpoint().user_transactions(user_id);
     }
 
@@ -48,6 +51,10 @@ public class Client {
 
     public Observable<Invoice.Document> invoice_latest(String invoice_id) {
         return endpoint().invoice_latest(invoice_id);
+    }
+
+    public Observable<User> user(String id) {
+        return endpoint().user(id);
     }
 
     private Endpoint endpoint() {

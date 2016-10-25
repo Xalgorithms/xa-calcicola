@@ -15,10 +15,10 @@ public interface Endpoint {
     Observable<Invoice> invoice(@Path("id") int id);
 
     @GET("/api/v1/users/{id}/invoices")
-    Observable<List<Invoice>> user_invoices(@Path("id") int id);
+    Observable<List<Invoice>> user_invoices(@Path("id") String id);
 
     @GET("/api/v1/users/{id}/transactions")
-    Observable<List<Transaction>> user_transactions(@Path("id") int id);
+    Observable<List<Transaction>> user_transactions(@Path("id") String id);
 
     @GET("/api/v1/documents/{id}")
     Observable<JsonObject> document(@Path("id") String id);
@@ -31,4 +31,7 @@ public interface Endpoint {
 
     @GET("/api/v1/invoices/{id}/latest")
     Observable<Invoice.Document> invoice_latest(@Path("id") String invoice_id);
+
+    @GET("/api/v1/users/{id}")
+    Observable<User> user(@Path("id") String user_id);
 }
