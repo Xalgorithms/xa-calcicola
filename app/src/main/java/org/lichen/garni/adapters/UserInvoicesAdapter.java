@@ -66,44 +66,45 @@ public class UserInvoicesAdapter extends RecyclerCollectionAdapter<UserInvoicesA
 
     @Override
     protected View init_view_holder(final ViewHolder vh, Invoice i) {
-        final String id = i.revisions.get(i.revisions.size() - 1).document.id;
-        Action1<InvoiceDocument> receive_document = new Action1<InvoiceDocument>() {
-            @Override
-            public void call(InvoiceDocument doc) {
-                Timber.d(">> populating (document_id=%s)", doc.document_id());
-                populate(vh, doc);
-                _subjects.remove(id);
-            }
-        };
+        if (i.revisions.size() > 0) {
+            final String id = i.revisions.get(i.revisions.size() - 1).document.id;
+            Action1<InvoiceDocument> receive_document = new Action1<InvoiceDocument>() {
+                @Override
+                public void call(InvoiceDocument doc) {
+                    Timber.d(">> populating (document_id=%s)", doc.document_id());
+                    populate(vh, doc);
+                    _subjects.remove(id);
+                }
+            };
 
-        if (_documents.exists(id)) {
-            Timber.d("> populating from existing document (id=%s)", id);
-            populate(vh, _documents.get(id));
-        } else {
-            if (!_subjects.containsKey(id)) {
-                Timber.d("> establishing subject (id=%s)", id);
-                _subjects.put(id, PublishSubject.<InvoiceDocument>create());
-                _client.document(id)
+            if (_documents.exists(id)) {
+                Timber.d("> populating from existing document (id=%s)", id);
+                populate(vh, _documents.get(id));
+            } else {
+                if (!_subjects.containsKey(id)) {
+                    Timber.d("> establishing subject (id=%s)", id);
+                    _subjects.put(id, PublishSubject.<InvoiceDocument>create());
+                    _client.document(id)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .subscribe(new Action1<JsonObject>() {
+                                @Override
+                                public void call(JsonObject o) {
+                                    Timber.d(">> received document (id=%s)", id);
+                                    InvoiceDocument doc = new InvoiceDocument(id, o);
+                                    _documents.add(doc);
+                                    _subjects.get(id).onNext(doc);
+                                }
+                            });
+                }
+
+                Timber.d("> subscribing (id=%s)", id);
+                _subjects.get(id)
                         .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io())
-                        .subscribe(new Action1<JsonObject>() {
-                            @Override
-                            public void call(JsonObject o) {
-                                Timber.d(">> received document (id=%s)", id);
-                                InvoiceDocument doc = new InvoiceDocument(id, o);
-                                _documents.add(doc);
-                                _subjects.get(id).onNext(doc);
-                            }
-                        });
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(receive_document);
             }
-
-            Timber.d("> subscribing (id=%s)", id);
-            _subjects.get(id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(receive_document);
         }
-
         return vh.target;
     }
 
