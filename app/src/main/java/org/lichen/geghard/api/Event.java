@@ -1,41 +1,33 @@
 package org.lichen.geghard.api;
 
-public class Event {
-    static class RegisterEvent {
-        String token;
-        String user_public_id;
-    }
-
-    static class TransactionExecuteEvent {
-        String transaction_public_id;
-    }
-
+public class Event<T> {
     String event_type;
-    RegisterEvent register_event;
-    TransactionExecuteEvent transaction_execute_event;
+    T payload;
+
+    static class RegisterPayload {
+        String token;
+        String user_id;
+    }
+
+    static class TransactionExecutePayload {
+        String transaction_id;
+    }
 
     public static Event make_register(String user_id, String token) {
-        Event rv = make_basic("register");
-
-        rv.register_event = new RegisterEvent();
-        rv.register_event.user_public_id = user_id;
-        rv.register_event.token = token;
+        Event<RegisterPayload> rv = new Event<>();
+        rv.event_type = "register";
+        rv.payload = new RegisterPayload();
+        rv.payload.user_id = user_id;
+        rv.payload.token = token;
 
         return rv;
     }
 
     public static Event make_execute(String transaction_id) {
-        Event rv = make_basic("transaction_execute");
-
-        rv.transaction_execute_event = new TransactionExecuteEvent();
-        rv.transaction_execute_event.transaction_public_id = transaction_id;
-
-        return rv;
-    }
-
-    private static Event make_basic(String t) {
-        Event rv = new Event();
-        rv.event_type = t;
+        Event<TransactionExecutePayload> rv = new Event<>();
+        rv.event_type = "transaction_execute";
+        rv.payload = new TransactionExecutePayload();
+        rv.payload.transaction_id = transaction_id;
         return rv;
     }
 }
