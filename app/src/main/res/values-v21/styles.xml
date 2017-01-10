@@ -1,2 +1,8 @@
-<resources>>
+<resources>
+    <!--
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/lichen_background_button</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    -->
 </resources>

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/lichen_primary</item>
+        <item name="colorButtonNormal">@color/lichen_button</item>
+        <item name="colorControlNormal">@color/lichen_control_normal</item>
+        <item name="colorControlActivated">@color/lichen_control_normal</item>
+    </style>
+
     <style name="lichen_label">
         <item name="android:textSize">12sp</item>
     </style>
@@ -24,7 +31,20 @@
     <style name="lichen_rules">
         <item name="android:textSize">24sp</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:background">@color/lichen_background_toolbar</item>
+    </style>
+
+    <style name="activity">
+        <item name="android:background">@color/lichen_background_activity</item>
+    </style>
+<!--
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="colorButtonNormal">@color/lichen_background_button</item>
+    </style>
+-->
 </resources>

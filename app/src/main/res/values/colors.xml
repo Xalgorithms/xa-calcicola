@@ -4,4 +4,9 @@
     <color name="garni_light_grey">#eeeeee</color>
     <color name="text_main_user">#ffffff</color>
     <color name="lichen_invoice_background">#ffe6e6e6</color>
+    <color name="lichen_background_toolbar">#fff9ac00</color>
+    <color name="lichen_background_activity">@android:color/white</color>
+    <color name="lichen_button">#fff9ac00</color>
+    <color name="lichen_primary">#fff9ac00</color>
+    <color name="lichen_control_normal">#fff9ac00</color>
 </resources>
