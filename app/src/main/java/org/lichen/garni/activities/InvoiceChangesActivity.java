@@ -3,7 +3,9 @@ package org.lichen.garni.activities;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
+import android.widget.TextView;
 
 import org.lichen.garni.R;
 import org.lichen.garni.adapters.InvoiceChangesItemsAdapter;
@@ -25,6 +27,8 @@ import rx.subjects.PublishSubject;
 
 public class InvoiceChangesActivity extends CoreActivity {
     @BindView(R.id.collection_invoice_changes_changes) RecyclerView _items;
+    @BindView(R.id.label_invoice_changes_changes) TextView _label_changes;
+    @BindView(R.id.label_invoice_changes_rules) TextView _label_rules;
 
     @Inject Client _client;
     @Inject Documents _documents;
@@ -37,6 +41,8 @@ public class InvoiceChangesActivity extends CoreActivity {
     public void onCreate(Bundle sis) {
         super.onCreate(sis);
         init(R.layout.activity_invoice_changes);
+        _label_changes.setText(Html.fromHtml(getString(R.string.label_invoice_changes_changes)));
+        _label_rules.setText(Html.fromHtml(getString(R.string.label_invoice_changes_rules)));
         _adapter = new InvoiceChangesItemsAdapter(this, new Receiver<ChangeDocument.CombinedChangedLine>() {
             @Override
             public void receive(View v, ChangeDocument.CombinedChangedLine it) {

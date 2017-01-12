@@ -35,6 +35,7 @@
     <string name="fmt_applied_rules">%1$d rules</string>
 
     <string name="gcm_sender_id">929318564370</string>
-    <string name="label_invoice_changes_changes">Changes</string>
+    <string name="label_invoice_changes_rules">1 rule</string>
+    <string name="label_invoice_changes_changes"><![CDATA[<font color="#db5800">before</font> &amp; <font color="#007348">after</font>]]></string>
     <string name="label_login_failed">Login failed. Verify your credentials.</string>
 </resources>
