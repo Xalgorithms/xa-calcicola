@@ -22,7 +22,11 @@ public class Document {
     }
 
     public static String string(JsonObject o, String k) {
-        return o.get(k).getAsString();
+        String rv = null;
+        if (o != null && o.get(k) != null) {
+            rv = o.get(k).getAsString();
+        }
+        return rv;
     }
 
     public static String format_currency(String code, double amount) {
@@ -54,7 +58,11 @@ public class Document {
     }
 
     public Double double_value(String k) {
-        return _object.get(k).getAsDouble();
+        double rv = 0.0;
+        if (_object != null && _object.get(k) != null) {
+            rv = _object.get(k).getAsDouble();
+        }
+        return rv;
     }
 
     public Person person(String k) {

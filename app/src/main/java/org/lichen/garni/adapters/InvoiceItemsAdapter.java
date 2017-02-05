@@ -25,7 +25,9 @@ public class InvoiceItemsAdapter extends RecyclerCollectionAdapter<InvoiceItemsA
     @Override
     protected View init_view_holder(ViewHolder vh, Line it) {
         vh.name.setText(it.name());
-        vh.description.setText(it.description().text());
+        if (it.description() != null) {
+            vh.description.setText(it.description().text());
+        }
         vh.price.setText(it.price().format());
         return vh.itemView;
     }

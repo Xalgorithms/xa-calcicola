@@ -20,7 +20,7 @@ public class Price extends Document {
     }
 
     public double amount() {
-        return double_value("amount");
+        return double_value("value");
     }
 
     public String format() {
