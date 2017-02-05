@@ -45,12 +45,7 @@ public class InvoiceDocument extends Document {
         });
     }
 
-    public String format_total() {
-        double total = 0.0;
-        for (Line ln : lines()) {
-            total += ln.price().amount();
-        }
-
-        return format_currency(string("currency"), total);
+    public Totals totals() {
+        return new Totals(locate("totals"));
     }
 }

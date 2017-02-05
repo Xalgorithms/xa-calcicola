@@ -12,32 +12,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/lichen_component_margin_vertical"
-            android:layout_marginBottom="@dimen/lichen_component_margin_vertical"
-            android:layout_marginStart="@dimen/lichen_component_margin_horizontal"
-            android:layout_marginLeft="@dimen/lichen_component_margin_horizontal"
-            android:layout_marginEnd="@dimen/lichen_component_margin_horizontal"
-            android:layout_marginRight="@dimen/lichen_component_margin_horizontal">
-            <TextView
-                android:id="@+id/label_summary_total"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                style="@style/lichen_card_title_large"
-                tools:text="$10999.88"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/label_summary_total"
-                style="@style/lichen_label_large"
-                android:text="@string/label_invoice_total"/>
-        </RelativeLayout>
+                android:layout_marginTop="@dimen/lichen_component_margin_vertical"
+                android:layout_marginBottom="@dimen/lichen_component_margin_vertical"
+                android:layout_marginStart="@dimen/lichen_component_margin_horizontal"
+                android:layout_marginLeft="@dimen/lichen_component_margin_horizontal"
+                android:layout_marginEnd="@dimen/lichen_component_margin_horizontal"
+                android:layout_marginRight="@dimen/lichen_component_margin_horizontal">
+                <TextView
+                    android:id="@+id/label_summary_subtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    tools:text="$10999.88"/>
+                <TextView
+                    android:id="@+id/label_summary_tax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    tools:text="$10999.88"/>
+                <TextView
+                    android:id="@+id/label_summary_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    tools:text="$10999.88"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/label_summary_subtotal"
+                    android:textSize="14sp"
+                    android:text="@string/label_invoice_subtotal"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/label_summary_tax"
+                    android:textSize="14sp"
+                    android:text="@string/label_invoice_tax"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/label_summary_total"
+                    android:textSize="14sp"
+                    android:text="@string/label_invoice_total"/>
+            </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +86,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                style="@style/lichen_card_title"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
                 tools:text="2016 Sep 10"/>
             <TextView
                 android:id="@+id/label_summary_due"
@@ -61,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                style="@style/lichen_card_title"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
                 tools:text="2016 Sep 30"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -69,7 +104,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/label_summary_issued"
-                style="@style/lichen_label"
+                android:textSize="14sp"
                 android:text="@string/label_invoice_issued"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -77,7 +112,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/label_summary_due"
-                style="@style/lichen_label"
+                android:textSize="14sp"
                 android:text="@string/label_invoice_due"/>
         </RelativeLayout>
     </LinearLayout>

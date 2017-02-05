@@ -13,7 +13,7 @@
     <dimen name="lichen_activity_padding_top">6sp</dimen>
     <dimen name="lichen_activity_padding_start">8sp</dimen>
     <dimen name="lichen_activity_padding_end">8sp</dimen>
-    <dimen name="lichen_component_margin_vertical">4sp</dimen>
+    <dimen name="lichen_component_margin_vertical">8sp</dimen>
     <dimen name="lichen_component_margin_horizontal">4sp</dimen>
     <dimen name="lichen_component_inter_spacing">8sp</dimen>
 </resources>

@@ -20,6 +20,8 @@
     <string name="transaction_status_unknown">unknown</string>
 
     <string name="label_invoice_total">Total</string>
+    <string name="label_invoice_subtotal">Subtotal</string>
+    <string name="label_invoice_tax">Tax</string>
     <string name="label_invoice_lichenize">Lichenize</string>
     <string name="label_invoice_show_changes">Show changes</string>
     <string name="label_invoice_due">Due</string>

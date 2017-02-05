@@ -100,4 +100,8 @@ public class Document {
         }
         return rv;
     }
+
+    protected Price price(String path) {
+        return new Price(locate(path));
+    }
 }
