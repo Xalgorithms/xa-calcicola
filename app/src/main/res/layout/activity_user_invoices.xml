@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/activity"
     tools:context=".activities.UserInvoicesActivity">
 
     <include layout="@layout/component_toolbar" />
@@ -12,11 +13,6 @@
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:paddingTop="@dimen/lichen_activity_padding_top"
-        android:paddingLeft="@dimen/lichen_activity_padding_start"
-        android:paddingStart="@dimen/lichen_activity_padding_start"
-        android:paddingRight="@dimen/lichen_activity_padding_end"
-        android:paddingEnd="@dimen/lichen_activity_padding_end"
         android:background="@color/lichen_invoice_background">
 
         <android.support.v7.widget.RecyclerView
