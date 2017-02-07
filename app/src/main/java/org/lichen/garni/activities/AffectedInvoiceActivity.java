@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class AffectedInvoiceActivity extends CoreActivity {
     @BindView(R.id.component_summary) View _summary;
     @BindView(R.id.component_changes) View _changes;
     @BindView(R.id.component_lichenize) View _lichenize_component;
-    @BindView(R.id.action_lichenize) Button _lichenize;
+    @BindView(R.id.action_lichenize) ImageButton _lichenize;
     @BindView(R.id.action_show_changes) Button _show_changes;
     @BindView(R.id.collection_affected_invoice_items) RecyclerView _items;
     @BindView(R.id.progress_lichenize) ProgressBar _progress;
