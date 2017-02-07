@@ -1,6 +1,8 @@
 package org.lichen.garni.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,8 +82,8 @@ public class LoginActivity extends CoreActivity {
 
         reset_login_widgets();
 
-        // FIXME: temporary
-        _email.setText("bob@nowhere.com");
+        // FIXME: improve
+        _email.setText(recall());
 
         remember(_click_behaviours.bindById(Lists.newArrayList((View) _login), _click_reactions));
         remember(login_text_change());
@@ -123,6 +125,7 @@ public class LoginActivity extends CoreActivity {
                 .subscribe(new Completion<User>() {
                     @Override
                     protected void response(User u) {
+                        remember(u);
                         if (gcmUp(u.id)) {
                             Invocations.launchUserInvoices(LoginActivity.this, u.id, u.email);
                         }
@@ -219,5 +222,18 @@ public class LoginActivity extends CoreActivity {
 
     private void unregisterManagers() {
         UpdateManager.unregister();
+    }
+
+    private void remember(User u) {
+        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putString(Constants.KEY_USER_EMAIL, u.email);
+        e.putString(Constants.KEY_USER_ID, u.id);
+        e.commit();
+    }
+
+    private String recall() {
+        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        return prefs.getString(Constants.KEY_USER_EMAIL, "bob@nowhere.com");
     }
 }

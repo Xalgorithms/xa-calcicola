@@ -10,5 +10,8 @@ public class Constants {
     public static final String ARG_LICHENIZED = "org.lichen.garni.intents.ARGS.LICHENIZED";
     public static final String ARG_USER_EMAIL = "org.lichen.garni.intents.ARGS.USER_EMAIL";
 
+    public static final String KEY_USER_EMAIL = "org.lichen.garni.keys.USER_EMAIL";
+    public static final String KEY_USER_ID = "org.lichen.garni.keys.USER_ID";
+
     public static final int REQUEST_ACCOUNT = 4001;
 }
